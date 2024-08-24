@@ -1,11 +1,9 @@
 package com.serial30.chainlogic.rulebase;
 
 import Rule.*;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-@Component
 public class DiagnoComBR {
     // Declaracion BASE DE REGLAS
     private final BooleanRuleBase br = new BooleanRuleBase("diagnocom");
@@ -81,6 +79,7 @@ public class DiagnoComBR {
         afeccionPiel.setValue(options.get(5));
         br.forwardChain(); // Realiza el encadenamiento hacia adelante
         nameHecho = afeccion.getValue(); // Obtiene el HECHO del 1er encadenamiento
+        afeccion.setValue(null); // Restablece el valor a null
         return nameHecho;
     }
 
@@ -95,6 +94,7 @@ public class DiagnoComBR {
         dolorOido.setValue(options.get(7));
         br.forwardChain();
         nameHecho = enfermedad.getValue();
+        enfermedad.setValue(null);
         return nameHecho;
     }
 
@@ -115,6 +115,7 @@ public class DiagnoComBR {
         dolorEspalda.setValue(options.get(13));
         br.forwardChain();
         nameHecho = enfermedad.getValue();
+        enfermedad.setValue(null);
         return nameHecho;
     }
 
@@ -133,6 +134,7 @@ public class DiagnoComBR {
         dolorPecho.setValue(options.get(11));
         br.forwardChain();
         nameHecho = enfermedad.getValue();
+        enfermedad.setValue(null);
         return nameHecho;
     }
 
@@ -154,6 +156,7 @@ public class DiagnoComBR {
         diarrea.setValue(options.get(14));
         br.forwardChain();
         nameHecho = enfermedad.getValue();
+        enfermedad.setValue(null);
         return nameHecho;
     }
 
@@ -166,6 +169,7 @@ public class DiagnoComBR {
         fiebre.setValue(options.get(5));
         br.forwardChain();
         nameHecho = enfermedad.getValue();
+        enfermedad.setValue(null);
         return nameHecho;
     }
 
@@ -176,6 +180,7 @@ public class DiagnoComBR {
         altaSensibilidadZona.setValue(options.get(3));
         br.forwardChain();
         nameHecho = enfermedad.getValue();
+        enfermedad.setValue(null);
         return nameHecho;
     }
 
