@@ -9,6 +9,5 @@ import java.util.Date;
 public class MessageResponse {
     private int status = 200;
     private Object data;
-    private String message = "Everything OK";
     private Date timestamp = new Date();
 }

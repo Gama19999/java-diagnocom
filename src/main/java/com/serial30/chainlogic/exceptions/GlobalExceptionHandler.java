@@ -14,7 +14,6 @@ public class GlobalExceptionHandler {
         var response = new MessageResponse();
         response.setStatus(HttpStatus.NOT_FOUND.value());
         response.setData(e.getMessage());
-        response.setMessage("Error occurred!");
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

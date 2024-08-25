@@ -17,7 +17,7 @@ public class HomeController {
     @RequestMapping(method = RequestMethod.GET, path = "status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> status() {
         var response = new MessageResponse();
-        response.setData(appName.toUpperCase() + " is working!");
+        response.setData(appName.toUpperCase() + " microservice is active!");
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 }
