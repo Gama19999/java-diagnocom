@@ -1,6 +1,6 @@
-package com.serial30.chainlogic.controllers;
+package com.serial30.diagnocom.controllers;
 
-import com.serial30.chainlogic.pojos.response.MessageResponse;
+import com.serial30.diagnocom.pojos.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

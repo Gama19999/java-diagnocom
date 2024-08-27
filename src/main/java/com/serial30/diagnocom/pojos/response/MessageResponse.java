@@ -1,4 +1,4 @@
-package com.serial30.chainlogic.pojos.response;
+package com.serial30.diagnocom.pojos.response;
 
 import lombok.Getter;
 import lombok.Setter;

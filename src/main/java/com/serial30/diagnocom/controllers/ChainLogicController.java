@@ -1,9 +1,9 @@
-package com.serial30.chainlogic.controllers;
+package com.serial30.diagnocom.controllers;
 
-import com.serial30.chainlogic.exceptions.FactNotInferredException;
-import com.serial30.chainlogic.pojos.response.MessageResponse;
-import com.serial30.chainlogic.pojos.request.IncomingData;
-import com.serial30.chainlogic.services.RuleChainingService;
+import com.serial30.diagnocom.exceptions.FactNotInferredException;
+import com.serial30.diagnocom.pojos.response.MessageResponse;
+import com.serial30.diagnocom.pojos.request.IncomingData;
+import com.serial30.diagnocom.services.RuleChainingService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -24,9 +24,9 @@ public class ChainLogicController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> doForwardChaining(@RequestBody IncomingData data) throws FactNotInferredException {
-        var fact = ruleChainingService.doForwardChaining(data.getChoices());
-        var response = new MessageResponse();
-        response.setData(fact);
-        return ResponseEntity.ok().body(response);
+        var responseData = ruleChainingService.doForwardChaining(data.getChoices());
+        var messageResponse = new MessageResponse();
+        messageResponse.setData(responseData);
+        return ResponseEntity.ok().body(messageResponse);
     }
 }

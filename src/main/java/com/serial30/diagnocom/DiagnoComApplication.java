@@ -1,13 +1,13 @@
-package com.serial30.chainlogic;
+package com.serial30.diagnocom;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChainlogicApplication {
+public class DiagnoComApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ChainlogicApplication.class, args);
+        SpringApplication.run(DiagnoComApplication.class, args);
     }
 
 }

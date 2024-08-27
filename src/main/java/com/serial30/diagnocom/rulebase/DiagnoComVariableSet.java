@@ -1,4 +1,4 @@
-package com.serial30.chainlogic.rulebase;
+package com.serial30.diagnocom.rulebase;
 
 import Rule.Condition;
 import Rule.Rule;

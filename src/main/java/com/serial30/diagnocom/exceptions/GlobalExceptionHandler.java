@@ -1,6 +1,6 @@
-package com.serial30.chainlogic.exceptions;
+package com.serial30.diagnocom.exceptions;
 
-import com.serial30.chainlogic.pojos.response.MessageResponse;
+import com.serial30.diagnocom.pojos.response.MessageResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
