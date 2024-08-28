@@ -81,7 +81,7 @@ public abstract class DiagnoComVariableSet {
     protected void starterBR(BooleanRuleBase br) {
         // Instancias de VARIABLES de regla
         afeccionCabeza = new RuleVariable(br, "AfeccionCabeza");
-        afeccionRespiratoria = new RuleVariable(br, "AfeccioRespiratoria");
+        afeccionRespiratoria = new RuleVariable(br, "AfeccionRespiratoria");
         afeccionDigestiva = new RuleVariable(br, "AfeccionDigestiva");
         afeccionInterna = new RuleVariable(br, "AfeccionInterna");
         afeccionUrinaria = new RuleVariable(br, "AfeccionUrinaria");
@@ -177,7 +177,7 @@ public abstract class DiagnoComVariableSet {
                         new Clause(afeccionInterna, igual, "no"),
                         new Clause(afeccionUrinaria, igual, "no"),
                         new Clause(afeccionPiel, igual, "si")},
-                new Clause(afeccion, igual, "Diagnóstco Cutáneo"));
+                new Clause(afeccion, igual, "Diagnóstico Cutáneo"));
 
         // ENFERMEDAD CON D.CABEZA
         Rule migrania = new Rule(br, "MIGRAÑA",
@@ -349,7 +349,7 @@ public abstract class DiagnoComVariableSet {
 
         // ENFERMEDAD CON D.DIGESTIVO
         Rule infeccionEstomago = new Rule(br, "INFECCION DE ESTOMAGO",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Digestivo"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Digestivo"),
                         new Clause(fiebre, igual, "si"),
                         new Clause(dolorAbdominal, igual, "si"),
                         new Clause(evacuacionesConstantes, igual, "si"),
@@ -363,7 +363,7 @@ public abstract class DiagnoComVariableSet {
                         new Clause(dolorPecho, igual, "no")},
                 new Clause(enfermedad, igual, "Infección de estómago"));
         Rule estrenimiento = new Rule(br, "ESTREÑIMIENTO",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Digestivo"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Digestivo"),
                         new Clause(fiebre, igual, "no"),
                         new Clause(dolorAbdominal, igual, "si"),
                         new Clause(evacuacionesConstantes, igual, "no"),
@@ -377,7 +377,7 @@ public abstract class DiagnoComVariableSet {
                         new Clause(dolorPecho, igual, "no")},
                 new Clause(enfermedad, igual, "Estreñimiento"));
         Rule indigestion = new Rule(br, "INDIGESTIÓN",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Digestivo"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Digestivo"),
                         new Clause(fiebre, igual, "no"),
                         new Clause(dolorAbdominal, igual, "si"),
                         new Clause(evacuacionesConstantes, igual, "no"),
@@ -391,7 +391,7 @@ public abstract class DiagnoComVariableSet {
                         new Clause(dolorPecho, igual, "no")},
                 new Clause(enfermedad, igual, "Indigestión"));
         Rule gastritis = new Rule(br, "GASTRITIS",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Digestivo"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Digestivo"),
                         new Clause(fiebre, igual, "no"),
                         new Clause(dolorAbdominal, igual, "si"),
                         new Clause(evacuacionesConstantes, igual, "no"),
@@ -405,7 +405,7 @@ public abstract class DiagnoComVariableSet {
                         new Clause(dolorPecho, igual, "si")},
                 new Clause(enfermedad, igual, "Gastritis"));
         Rule colitis = new Rule(br, "COLITIS",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Digestivo"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Digestivo"),
                         new Clause(fiebre, igual, "no"),
                         new Clause(dolorAbdominal, igual, "si"),
                         new Clause(evacuacionesConstantes, igual, "no"),
@@ -421,7 +421,7 @@ public abstract class DiagnoComVariableSet {
 
         // ENFERMEDAD CON D.INTERNO
         Rule apendicitis = new Rule(br, "APENDICITIS",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Interno"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Interno"),
                         new Clause(fiebre, igual, "si"),
                         new Clause(dolorAbdominal, igual, "si"),
                         new Clause(nauseas, igual, "si"),
@@ -438,7 +438,7 @@ public abstract class DiagnoComVariableSet {
                         new Clause(diarrea, igual, "no")},
                 new Clause(enfermedad, igual, "Apendicitis"));
         Rule esofagitis = new Rule(br, "ESOFAGITIS",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Interno"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Interno"),
                         new Clause(fiebre, igual, "no"),
                         new Clause(dolorAbdominal, igual, "si"),
                         new Clause(nauseas, igual, "si"),
@@ -455,7 +455,7 @@ public abstract class DiagnoComVariableSet {
                         new Clause(diarrea, igual, "no")},
                 new Clause(enfermedad, igual, "Esofagitis"));
         Rule pancreatitis = new Rule(br, "PANCREATITIS",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Interno"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Interno"),
                         new Clause(fiebre, igual, "no"),
                         new Clause(dolorAbdominal, igual, "si"),
                         new Clause(nauseas, igual, "si"),
@@ -472,7 +472,7 @@ public abstract class DiagnoComVariableSet {
                         new Clause(diarrea, igual, "si")},
                 new Clause(enfermedad, igual, "Pancreatitis"));
         Rule anemia = new Rule(br, "ANEMIA",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Interno"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Interno"),
                         new Clause(fiebre, igual, "no"),
                         new Clause(dolorAbdominal, igual, "no"),
                         new Clause(nauseas, igual, "no"),
@@ -491,7 +491,7 @@ public abstract class DiagnoComVariableSet {
 
         // ENFERMEDAD CON D.URINARIO
         Rule infeccionUrinaria = new Rule(br, "INFECCION URINARIA",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Urinario"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Urinario"),
                         new Clause(nauseas, igual, "si"),
                         new Clause(dolorAlOrinar, igual, "si"),
                         new Clause(sangradoAlOrinar, igual, "si"),
@@ -501,7 +501,7 @@ public abstract class DiagnoComVariableSet {
 
         // ENFERMEDAD CON D.CUTANEO
         Rule infeccionPiel = new Rule(br, "INFECCION DE LA PIEL",
-                new Clause[]{new Clause(afeccion, igual, "Diangnóstico Cutáneo"),
+                new Clause[]{new Clause(afeccion, igual, "Diagnóstico Cutáneo"),
                         new Clause(pielEnrogecida, igual, "si"),
                         new Clause(inflamacionZona, igual, "si"),
                         new Clause(altaSensibilidadZona, igual, "si")},

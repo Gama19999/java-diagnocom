@@ -30,10 +30,10 @@ public class RuleChainingServiceImpl implements RuleChainingService {
         switch (fact) {
             case "Diagnóstico Encefálico" -> options = new HeadOptions();
             case "Diagnóstico Respiratorio" -> options = new RespiratoryOptions();
-            case "Diagnóstico Digestivo" -> options = new DigestiveOptions(); // TODO
-            case "Diagnóstico Interno" -> options = new InternalOptions(); // TODO
-            case "Diagnóstico Urinario" -> options = new UrinaryOptions(); // TODO
-            case "Diagnóstco Cutáneo" -> options = new SkinOptions(); // TODO
+            case "Diagnóstico Digestivo" -> options = new DigestiveOptions();
+            case "Diagnóstico Interno" -> options = new InternalOptions();
+            case "Diagnóstico Urinario" -> options = new UrinaryOptions();
+            case "Diagnóstico Cutáneo" -> options = new SkinOptions();
         }
         return new ArrayList<>(Arrays.asList(factMap, options));
     }

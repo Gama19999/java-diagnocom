@@ -16,7 +16,7 @@ public class DiagnoComBRB extends DiagnoComVariableSet {
 
         // Mapea las variables con su nombre
         variables = Map.ofEntries(
-            entry("afeccion", afeccion), entry("enfermedad", enfermedad), entry("afeccionCabeza", afeccionCabeza),
+            entry("afeccion", afeccion), entry("afeccionCabeza", afeccionCabeza),
             entry("afeccionRespiratoria", afeccionRespiratoria), entry("afeccionDigestiva", afeccionDigestiva),
             entry("afeccionInterna", afeccionInterna), entry("afeccionUrinaria", afeccionUrinaria),
             entry("afeccionPiel", afeccionPiel), entry("dolorCabeza", dolorCabeza),
