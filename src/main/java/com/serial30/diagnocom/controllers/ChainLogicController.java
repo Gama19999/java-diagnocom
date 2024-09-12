@@ -15,9 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("${app.name}")
+@RequestMapping("${app.name}/brb")
 public class ChainLogicController {
-
     private static final Logger logger = LoggerFactory.getLogger(ChainLogicController.class);
 
     @Autowired
@@ -30,7 +29,7 @@ public class ChainLogicController {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> doForwardChaining(HttpServletRequest request, @RequestBody IncomingData data) throws FactNotInferredException {
         logRequestData(request);
-        var responseData = ruleChainingService.doForwardChaining(data.getChoices());
+        var responseData = ruleChainingService.doForwardChaining(data.getObject());
         var messageResponse = new MessageResponse();
         messageResponse.setData(responseData);
         return ResponseEntity.ok().body(messageResponse);

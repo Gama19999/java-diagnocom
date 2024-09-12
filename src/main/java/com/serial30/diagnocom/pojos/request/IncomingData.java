@@ -7,5 +7,5 @@ import java.util.Map;
 
 @Getter @Setter
 public class IncomingData {
-    private Map<String, String> choices;
+    private Map<String, String> object;
 }

@@ -2,7 +2,9 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <springProperty name="appName" source="app.name" />
-    <property name="LOG_FILE" value="./logs/${appName}" />
+    <property name="LOG_FILE" value="${appName}" />
+    <property name="LOG_FILE_ARCHIVED" value="${LOG_FILE}.%d{yyyy-MM-dd}.gz" />
+    <property name="LOG_DIR" value="./logs" />
 
     <!-- Appender to log to the console -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -14,9 +16,9 @@
 
     <!-- Appender to log to a file -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE}.log</file>
+        <file>${LOG_DIR}/${LOG_FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${appName}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/${LOG_FILE_ARCHIVED}</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
