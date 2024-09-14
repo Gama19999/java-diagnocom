@@ -2,10 +2,10 @@ package com.serial30.diagnocom.services;
 
 import com.serial30.diagnocom.exceptions.AuthDataException;
 import com.serial30.diagnocom.pojos.request.UserRequest;
-import com.serial30.diagnocom.pojos.response.UserResponse;
+import com.serial30.diagnocom.pojos.response.UserToken;
 
 public interface UserService {
-    UserResponse registerUser(UserRequest userRequest);
+    UserToken registerUser(UserRequest userRequest);
 
-    UserResponse loginUser(UserRequest userRequest) throws AuthDataException;
+    UserToken loginUser(UserRequest userRequest) throws AuthDataException;
 }

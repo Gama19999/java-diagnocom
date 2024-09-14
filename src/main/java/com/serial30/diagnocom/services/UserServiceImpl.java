@@ -3,7 +3,7 @@ package com.serial30.diagnocom.services;
 import com.serial30.diagnocom.entities.UserEntity;
 import com.serial30.diagnocom.exceptions.AuthDataException;
 import com.serial30.diagnocom.pojos.request.UserRequest;
-import com.serial30.diagnocom.pojos.response.UserResponse;
+import com.serial30.diagnocom.pojos.response.UserToken;
 import com.serial30.diagnocom.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,20 +16,25 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private JWTService jwtService;
 
     @Override
-    public UserResponse registerUser(UserRequest userRequest) {
-        var userEntity = userRepository.save(extractData(userRequest));
-        return exportData(userEntity);
+    public UserToken registerUser(UserRequest userRequest) {
+        var userId = userRepository.save(extractData(userRequest)).getUserId().toString();
+        var token = jwtService.generateToken(userId);
+        return new UserToken(token);
     }
 
     @Override
-    public UserResponse loginUser(UserRequest userRequest) throws AuthDataException {
+    public UserToken loginUser(UserRequest userRequest) throws AuthDataException {
         var userEntity = userRepository.findByUsername(userRequest.username());
-        if (!userRequest.password().equals(userEntity.getPassword())) throw new AuthDataException("Wrong password!");
+        if (userEntity == null) throw new AuthDataException("Usuario no encontrado!");
+        if (!userRequest.password().equals(userEntity.getPassword())) throw new AuthDataException("Autenticación fallida!");
         userEntity.setLastLogin(new Timestamp(new Date().getTime()));
         userEntity = userRepository.save(userEntity);
-        return exportData(userEntity);
+        var token = jwtService.generateToken(userEntity.getUserId().toString());
+        return new UserToken(token);
     }
 
     private UserEntity extractData(UserRequest userRequest) { // TODO decrypt data
@@ -37,14 +42,5 @@ public class UserServiceImpl implements UserService {
         entity.setUsername(userRequest.username());
         entity.setPassword(userRequest.password());
         return entity;
-    }
-
-    private UserResponse exportData(UserEntity userEntity) { // TODO encrypt data
-        return new UserResponse(
-                userEntity.getUserId().toString(),
-                userEntity.getUsername(),
-                userEntity.getEmail(),
-                userEntity.getLastLogin()
-        );
     }
 }

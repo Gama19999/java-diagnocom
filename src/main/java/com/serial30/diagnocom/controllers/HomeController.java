@@ -1,5 +1,6 @@
 package com.serial30.diagnocom.controllers;
 
+import com.serial30.diagnocom.configuration.S;
 import com.serial30.diagnocom.pojos.response.MessageResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -10,18 +11,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("*")
-@RequestMapping("${app.name}/home")
+@RequestMapping(S.Routes.HOME)
 public class HomeController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Value("${app.name}")
     private String appName;
-
     @Value("${app.version}")
     private String appVersion;
 
-    @RequestMapping(method = RequestMethod.GET, path = "status", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(
+            method = RequestMethod.GET,
+            path = S.Routes.STATUS,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> status(HttpServletRequest request) {
         var response = new MessageResponse();
         response.setData("(" + appName.toUpperCase() + "  v" + appVersion + ") is ACTIVE!");

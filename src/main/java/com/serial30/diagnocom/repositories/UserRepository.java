@@ -1,5 +1,6 @@
 package com.serial30.diagnocom.repositories;
 
+import com.serial30.diagnocom.configuration.S;
 import com.serial30.diagnocom.entities.UserEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,5 +13,5 @@ import java.util.UUID;
 public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
     @Query(value = "from USERS u where u.username = :username")
-    UserEntity findByUsername(@Param("username") String username);
+    UserEntity findByUsername(@Param(S.Entities.USERNAME) String username);
 }

@@ -1,5 +1,6 @@
 package com.serial30.diagnocom.entities;
 
+import com.serial30.diagnocom.configuration.S;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,27 +8,27 @@ import lombok.Setter;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-@Entity(name = "USERS")
-@Table(name = "users")
+@Entity(name = S.Entities.JPQL_USERS)
+@Table(name = S.Entities.TABLE_USERS)
 @Getter @Setter
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "user_id", insertable = false, updatable = false)
+    @Column(name = S.Entities.USER_ID, insertable = false, updatable = false)
     private UUID userId;
 
-    @Column(name = "username", nullable = false, unique = true, length = 50)
+    @Column(name = S.Entities.USERNAME, nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = S.Entities.PASSWORD, nullable = false, length = 50)
     private String password;
 
-    @Column(name = "email", unique = true)
+    @Column(name = S.Entities.EMAIL, unique = true)
     private String email;
 
-    @Column(name = "created_at", insertable = false, updatable = false)
+    @Column(name = S.Entities.CREATED_AT, insertable = false, updatable = false)
     private Timestamp createdAt;
 
-    @Column(name = "last_login")
+    @Column(name = S.Entities.LAST_LOGIN)
     private Timestamp lastLogin;
 }
