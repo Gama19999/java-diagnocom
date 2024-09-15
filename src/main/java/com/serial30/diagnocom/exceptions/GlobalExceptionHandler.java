@@ -3,6 +3,7 @@ package com.serial30.diagnocom.exceptions;
 import com.serial30.diagnocom.pojos.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,6 +45,15 @@ public class GlobalExceptionHandler {
         var response = new MessageResponse();
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         response.setData(e.getMessage());
+        err(response);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> dataIntegrityViolationException(DataIntegrityViolationException e) {
+        var response = new MessageResponse();
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.setData(e.getCause().getMessage().contains("duplicate key") ? "Datos de registro ya existentes" : e.getMessage());
         err(response);
         return ResponseEntity.status(response.getStatus()).body(response);
     }
