@@ -13,6 +13,7 @@ public abstract class S {
         String AUTH = "/auth";
         String REGISTER = "/register";
         String LOGIN = "/login";
+        String USER = "/user";
         String BRB = "/brb";
         String FORWARD = "/forward";
     }
@@ -27,6 +28,8 @@ public abstract class S {
         String USER_ID = "user_id";
         String USERNAME = "username";
         String PASSWORD = "password";
+        String CURRENT_PASSWORD = "currentPassword";
+        String NEW_PASSWORD = "newPassword";
         String EMAIL = "email";
         String CREATED_AT = "created_at";
         String LAST_LOGIN = "last_login";
