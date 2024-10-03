@@ -1,6 +1,6 @@
 package ovh.serial30.diagnocom.exceptions;
 
-import ovh.serial30.diagnocom.configuration.Const;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import ovh.serial30.diagnocom.pojos.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,11 +50,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<?> numberFormatException(NumberFormatException e) {
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<?> jsonException(JsonProcessingException e) {
         var response = new MessageResponse();
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        response.setData(Const.Logs.VALID_TEMP);
+        response.setData(e.getMessage());
         err(response);
         return ResponseEntity.status(response.getStatus()).body(response);
     }

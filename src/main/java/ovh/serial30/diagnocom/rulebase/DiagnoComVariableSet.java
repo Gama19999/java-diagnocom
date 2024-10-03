@@ -1,51 +1,51 @@
 package ovh.serial30.diagnocom.rulebase;
 
-import Rule.Condition;
-import Rule.Rule;
-import Rule.RuleVariable;
-import Rule.BooleanRuleBase;
-import Rule.Clause;
+import Rule.*;
 import ovh.serial30.diagnocom.configuration.Const;
-import ovh.serial30.diagnocom.exceptions.FactAnalysisException;
 
 import java.util.Map;
 
+/**
+ * Clase que contiene las variables y declaracion de reglas usadas en los encadenamientos
+ */
 public abstract class DiagnoComVariableSet {
     // Declaracion variables HECHOS (CONCLUSIONES)
-    protected RuleVariable afeccion;
+    protected RuleVariable temperatura;
+    protected RuleVariable localizacion;
     protected RuleVariable enfermedad;
-    protected String nameHecho;
 
-    // Declaracion variables de REGLAS (1-6)
-    protected RuleVariable afeccionCabeza;
-    protected RuleVariable afeccionRespiratoria;
-    protected RuleVariable afeccionDigestiva;
-    protected RuleVariable afeccionInterna;
-    protected RuleVariable afeccionUrinaria;
-    protected RuleVariable afeccionPiel;
+    // Declaracion variables REGLAS (1-3)
+    protected RuleVariable grados;
 
-    // Declaracion variables de REGLAS (7-8)
+    // Declaracion variables de REGLAS (4-9)
+    protected RuleVariable locCabeza;
+    protected RuleVariable locRespiratoria;
+    protected RuleVariable locDigestiva;
+    protected RuleVariable locInterna;
+    protected RuleVariable locUrinaria;
+    protected RuleVariable locCutanea;
+
+    // Declaracion variables de REGLAS (10-11)
     protected RuleVariable dolorCabeza;
     protected RuleVariable presionArterialAlta;
-    protected RuleVariable temperatura;
     protected RuleVariable zumbidoOidos;
     protected RuleVariable nauseas;
     protected RuleVariable dolorGarganta;
     protected RuleVariable dolorOido;
 
-    // Declaracion variables de REGLAS (9-17)
+    // Declaracion variables de REGLAS (12-19)
     protected RuleVariable tos;
-    protected RuleVariable estornudos;
-    protected RuleVariable dolorArticulaciones;
-    protected RuleVariable dolorEspalda;
     protected RuleVariable dolorPecho;
     protected RuleVariable escurrimientoNasal;
     protected RuleVariable fatiga;
     protected RuleVariable congestionNasal;
     protected RuleVariable dolorCorporal;
     protected RuleVariable dificultadRespiratoria;
+    protected RuleVariable estornudos;
+    protected RuleVariable dolorArticulaciones;
+    protected RuleVariable dolorEspalda;
 
-    // Declaracion variables de REGLAS (18-22)
+    // Declaracion variables de REGLAS (20-24)
     protected RuleVariable dolorAbdominal;
     protected RuleVariable evacuacionesConstantes;
     protected RuleVariable acidezEstomacal;
@@ -54,471 +54,462 @@ public abstract class DiagnoComVariableSet {
     protected RuleVariable diarrea;
     protected RuleVariable evacuacionesConDolor;
 
-    // Declaracion variables de REGLAS (23-26)
-
-    // Declaracion variables de REGLAS (27)
+    // Declaracion variables de REGLAS (29)
     protected RuleVariable dolorAlOrinar;
     protected RuleVariable sangradoAlOrinar;
 
-    // Declaracion variables de REGLAS (28)
+    // Declaracion variables de REGLAS (30)
     protected RuleVariable pielEnrogecida;
     protected RuleVariable inflamacionZona;
     protected RuleVariable altaSensibilidadZona;
 
-    // Mapa con las variables
+    // Mapa que almacena las variables de la base de reglas
     protected Map<String, RuleVariable> variables;
 
-    // Establece el valor de las variables, obtenidos de un parametro en el metodo
-    public abstract void insertChoices(Map<String, String> choices) throws FactAnalysisException;
-
-    // Realiza el encadenamiento hacia adelante y retorna el hecho resultante
-    public abstract String getCondition();
-
-    // Realiza el encadenamiento hacia adelante y retorna el hecho resultante
-    public abstract String getIllness();
+    /**
+     * Establece el valor de las variables en la base de reglas previo a realizar el encadenamiento
+     * @param choices Respuestas del usuario
+     * @return Instancia de la clase que emula la base de reglas
+     */
+    public abstract DiagnoComBRB insertChoices(Map<String, String> choices);
 
     /**
-     * Inicializa los atributos de la clase
+     * Realiza el encadenamiento hacia adelante
+     * @return Hecho <b>temperatura</b>
      */
-    protected void starterBR(BooleanRuleBase br) {
-        // Instancias de VARIABLES de regla
-        afeccionCabeza = new RuleVariable(br, Const.BRB.Symptoms.afeccionCabeza);
-        afeccionRespiratoria = new RuleVariable(br, Const.BRB.Symptoms.afeccionRespiratoria);
-        afeccionDigestiva = new RuleVariable(br, Const.BRB.Symptoms.afeccionDigestiva);
-        afeccionInterna = new RuleVariable(br, Const.BRB.Symptoms.afeccionInterna);
-        afeccionUrinaria = new RuleVariable(br, Const.BRB.Symptoms.afeccionUrinaria);
-        afeccionPiel = new RuleVariable(br, Const.BRB.Symptoms.afeccionPiel);
+    public abstract String getTemperatura();
 
-        dolorCabeza = new RuleVariable(br, Const.BRB.Symptoms.dolorCabeza);
-        presionArterialAlta = new RuleVariable(br, Const.BRB.Symptoms.presionArterialAlta);
-        temperatura = new RuleVariable(br, Const.BRB.Symptoms.temperatura);
-        zumbidoOidos = new RuleVariable(br, Const.BRB.Symptoms.zumbidoOidos);
-        nauseas = new RuleVariable(br, Const.BRB.Symptoms.nauseas);
-        dolorGarganta = new RuleVariable(br, Const.BRB.Symptoms.dolorGarganta);
-        dolorOido = new RuleVariable(br, Const.BRB.Symptoms.dolorOido);
+    /**
+     * Realiza el encadenamiento hacia adelante
+     * @return Hecho <b>localizacion</b>
+     */
+    public abstract String getLocalizacion();
 
-        tos = new RuleVariable(br, Const.BRB.Symptoms.tos);
-        estornudos = new RuleVariable(br, Const.BRB.Symptoms.estornudos);
-        dolorArticulaciones = new RuleVariable(br, Const.BRB.Symptoms.dolorArticulaciones);
-        dolorEspalda = new RuleVariable(br, Const.BRB.Symptoms.dolorEspalda);
-        dolorPecho = new RuleVariable(br, Const.BRB.Symptoms.dolorPecho);
-        escurrimientoNasal = new RuleVariable(br, Const.BRB.Symptoms.escurrimientoNasal);
-        fatiga = new RuleVariable(br, Const.BRB.Symptoms.fatiga);
-        congestionNasal = new RuleVariable(br, Const.BRB.Symptoms.congestionNasal);
-        dolorCorporal = new RuleVariable(br, Const.BRB.Symptoms.dolorCorporal);
-        dificultadRespiratoria = new RuleVariable(br, Const.BRB.Symptoms.dificultadRespiratoria);
+    /**
+     * Realiza el encadenamiento hacia adelante
+     * @return Hecho <b>enfermedad</b>
+     */
+    public abstract String getEnfermedad();
 
-        dolorAbdominal = new RuleVariable(br, Const.BRB.Symptoms.dolorAbdominal);
-        evacuacionesConstantes = new RuleVariable(br, Const.BRB.Symptoms.evacuacionesConstantes);
-        acidezEstomacal = new RuleVariable(br, Const.BRB.Symptoms.acidezEstomacal);
-        vomito = new RuleVariable(br, Const.BRB.Symptoms.vomito);
-        hemorragiaRectal = new RuleVariable(br, Const.BRB.Symptoms.hemorragiaRectal);
-        diarrea = new RuleVariable(br, Const.BRB.Symptoms.diarrea);
-        evacuacionesConDolor = new RuleVariable(br, Const.BRB.Symptoms.evacuacionesConDolor);
+    /**
+     * Crea las variables y las reglas a usar en los encademanientos
+     * @param brb Objeto que almacena la base de reglas
+     */
+    protected void starterBR(BooleanRuleBase brb) {
+        /* Instancias de CONSECUENTES de regla */
+        temperatura = new RuleVariable(brb, Const.BRB.Facts.TEMPERATURA);
+        localizacion = new RuleVariable(brb, Const.BRB.Facts.LOCALIZACION);
+        enfermedad = new RuleVariable(brb, Const.BRB.Facts.ENFERMEDAD);
 
-        dolorAlOrinar = new RuleVariable(br, Const.BRB.Symptoms.dolorAlOrinar);
-        sangradoAlOrinar = new RuleVariable(br, Const.BRB.Symptoms.sangradoAlOrinar);
+        /* Instancias de VARIABLES de regla */
+        grados = new RuleVariable(brb, Const.BRB.VarName.grados);
 
-        pielEnrogecida = new RuleVariable(br, Const.BRB.Symptoms.pielEnrogecida);
-        inflamacionZona = new RuleVariable(br, Const.BRB.Symptoms.inflamacionZona);
-        altaSensibilidadZona = new RuleVariable(br, Const.BRB.Symptoms.altaSensibilidadZona);
+        locCabeza = new RuleVariable(brb, Const.BRB.VarName.locCabeza);
+        locRespiratoria = new RuleVariable(brb, Const.BRB.VarName.locRespiratoria);
+        locDigestiva = new RuleVariable(brb, Const.BRB.VarName.locDigestiva);
+        locInterna = new RuleVariable(brb, Const.BRB.VarName.locInterna);
+        locUrinaria = new RuleVariable(brb, Const.BRB.VarName.locUrinaria);
+        locCutanea = new RuleVariable(brb, Const.BRB.VarName.locCutanea);
 
-        // Instancias de CONSECUENTES de regla
-        afeccion = new RuleVariable(br, Const.BRB.afeccion);
-        enfermedad = new RuleVariable(br, Const.BRB.enfermedad);
+        dolorCabeza = new RuleVariable(brb, Const.BRB.VarName.dolorCabeza);
+        presionArterialAlta = new RuleVariable(brb, Const.BRB.VarName.presionArterialAlta);
+        zumbidoOidos = new RuleVariable(brb, Const.BRB.VarName.zumbidoOidos);
+        nauseas = new RuleVariable(brb, Const.BRB.VarName.nauseas);
+        dolorGarganta = new RuleVariable(brb, Const.BRB.VarName.dolorGarganta);
+        dolorOido = new RuleVariable(brb, Const.BRB.VarName.dolorOido);
 
-        // Definicion de operadores logicos (condicionales)
-        Condition equal = new Condition("=");
-        Condition greater = new Condition(">");
-        Condition less = new Condition("<");
+        tos = new RuleVariable(brb, Const.BRB.VarName.tos);
+        dolorPecho = new RuleVariable(brb, Const.BRB.VarName.dolorPecho);
+        escurrimientoNasal = new RuleVariable(brb, Const.BRB.VarName.escurrimientoNasal);
+        fatiga = new RuleVariable(brb, Const.BRB.VarName.fatiga);
+        congestionNasal = new RuleVariable(brb, Const.BRB.VarName.congestionNasal);
+        dolorCorporal = new RuleVariable(brb, Const.BRB.VarName.dolorCorporal);
+        dificultadRespiratoria = new RuleVariable(brb, Const.BRB.VarName.dificultadRespiratoria);
+        estornudos = new RuleVariable(brb, Const.BRB.VarName.estornudos);
+        dolorArticulaciones = new RuleVariable(brb, Const.BRB.VarName.dolorArticulaciones);
+        dolorEspalda = new RuleVariable(brb, Const.BRB.VarName.dolorEspalda);
 
-        // Creacion de reglas de validacion (Base de Reglas)
-        // AFECCION
-        Rule dCabeza = new Rule(br, Const.BRB.Number.R1,
-                new Clause[]{new Clause(afeccionCabeza, equal, Const.BRB.SI),
-                        new Clause(afeccionRespiratoria, equal, Const.BRB.NO),
-                        new Clause(afeccionDigestiva, equal, Const.BRB.NO),
-                        new Clause(afeccionInterna, equal, Const.BRB.NO),
-                        new Clause(afeccionUrinaria, equal, Const.BRB.NO),
-                        new Clause(afeccionPiel, equal, Const.BRB.NO)},
-                new Clause(afeccion, equal, Const.BRB.Facts.D_ENCEFALICO));
-        Rule dRespiratorio = new Rule(br, Const.BRB.Number.R2,
-                new Clause[]{new Clause(afeccionCabeza, equal, Const.BRB.NO),
-                        new Clause(afeccionRespiratoria, equal, Const.BRB.SI),
-                        new Clause(afeccionDigestiva, equal, Const.BRB.NO),
-                        new Clause(afeccionInterna, equal, Const.BRB.NO),
-                        new Clause(afeccionUrinaria, equal, Const.BRB.NO),
-                        new Clause(afeccionPiel, equal, Const.BRB.NO)},
-                new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO));
-        Rule dDigestivo = new Rule(br, Const.BRB.Number.R3,
-                new Clause[]{new Clause(afeccionCabeza, equal, Const.BRB.NO),
-                        new Clause(afeccionRespiratoria, equal, Const.BRB.NO),
-                        new Clause(afeccionDigestiva, equal, Const.BRB.SI),
-                        new Clause(afeccionInterna, equal, Const.BRB.NO),
-                        new Clause(afeccionUrinaria, equal, Const.BRB.NO),
-                        new Clause(afeccionPiel, equal, Const.BRB.NO)},
-                new Clause(afeccion, equal, Const.BRB.Facts.D_DIGESTIVO));
-        Rule dInterno = new Rule(br, Const.BRB.Number.R4,
-                new Clause[]{new Clause(afeccionCabeza, equal, Const.BRB.NO),
-                        new Clause(afeccionRespiratoria, equal, Const.BRB.NO),
-                        new Clause(afeccionDigestiva, equal, Const.BRB.NO),
-                        new Clause(afeccionInterna, equal, Const.BRB.SI),
-                        new Clause(afeccionUrinaria, equal, Const.BRB.NO),
-                        new Clause(afeccionPiel, equal, Const.BRB.NO)},
-                new Clause(afeccion, equal, Const.BRB.Facts.D_INTERNO));
-        Rule dUrinario= new Rule(br, Const.BRB.Number.R5,
-                new Clause[]{new Clause(afeccionCabeza, equal, Const.BRB.NO),
-                        new Clause(afeccionRespiratoria, equal, Const.BRB.NO),
-                        new Clause(afeccionDigestiva, equal, Const.BRB.NO),
-                        new Clause(afeccionInterna, equal, Const.BRB.NO),
-                        new Clause(afeccionUrinaria, equal, Const.BRB.SI),
-                        new Clause(afeccionPiel, equal, Const.BRB.NO)},
-                new Clause(afeccion, equal, Const.BRB.Facts.D_URINARIO));
-        Rule dCutaneo = new Rule(br, Const.BRB.Number.R6,
-                new Clause[]{new Clause(afeccionCabeza, equal, Const.BRB.NO),
-                        new Clause(afeccionRespiratoria, equal, Const.BRB.NO),
-                        new Clause(afeccionDigestiva, equal, Const.BRB.NO),
-                        new Clause(afeccionInterna, equal, Const.BRB.NO),
-                        new Clause(afeccionUrinaria, equal, Const.BRB.NO),
-                        new Clause(afeccionPiel, equal, Const.BRB.SI)},
-                new Clause(afeccion, equal, Const.BRB.Facts.D_CUTANEO));
+        dolorAbdominal = new RuleVariable(brb, Const.BRB.VarName.dolorAbdominal);
+        evacuacionesConstantes = new RuleVariable(brb, Const.BRB.VarName.evacuacionesConstantes);
+        acidezEstomacal = new RuleVariable(brb, Const.BRB.VarName.acidezEstomacal);
+        vomito = new RuleVariable(brb, Const.BRB.VarName.vomito);
+        hemorragiaRectal = new RuleVariable(brb, Const.BRB.VarName.hemorragiaRectal);
+        diarrea = new RuleVariable(brb, Const.BRB.VarName.diarrea);
+        evacuacionesConDolor = new RuleVariable(brb, Const.BRB.VarName.evacuacionesConDolor);
 
-        // ENFERMEDAD CON D.CABEZA
-        Rule migrania = new Rule(br, Const.BRB.Number.R7,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_ENCEFALICO),
-                        new Clause(dolorCabeza, equal, Const.BRB.SI),
-                        new Clause(presionArterialAlta, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_36),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37),
-                        new Clause(zumbidoOidos, equal, Const.BRB.SI),
-                        new Clause(nauseas, equal, Const.BRB.SI),
-                        new Clause(dolorGarganta, equal, Const.BRB.NO),
-                        new Clause(dolorOido, equal, Const.BRB.NO)},
+        dolorAlOrinar = new RuleVariable(brb, Const.BRB.VarName.dolorAlOrinar);
+        sangradoAlOrinar = new RuleVariable(brb, Const.BRB.VarName.sangradoAlOrinar);
+
+        pielEnrogecida = new RuleVariable(brb, Const.BRB.VarName.pielEnrogecida);
+        inflamacionZona = new RuleVariable(brb, Const.BRB.VarName.inflamacionZona);
+        altaSensibilidadZona = new RuleVariable(brb, Const.BRB.VarName.altaSensibilidadZona);
+
+        /* Definicion de operadores logicos (condicionales) */
+        var equal = new Condition("=");
+        var greater = new Condition(">");
+        var less = new Condition("<");
+
+        /* Creacion de reglas de validacion (Base de Reglas) */
+        // TEMPERATURA (1-3)
+        Rule hipotermia = new Rule(brb, Const.BRB.RuleId.R1,
+                new Clause[]{new Clause(grados, less, Const.BRB.Values.TEMP_36)},
+                new Clause(temperatura, equal, Const.BRB.Facts.HIPOTERMIA));
+        Rule normal = new Rule(brb, Const.BRB.RuleId.R2,
+                new Clause[]{new Clause(grados, greater, Const.BRB.Values.TEMP_35_9),
+                        new Clause(grados, less, Const.BRB.Values.TEMP_37_5),},
+                new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL));
+        Rule fiebre = new Rule(brb, Const.BRB.RuleId.R3,
+                new Clause[]{new Clause(grados, greater, Const.BRB.Values.TEMP_37_5)},
+                new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE));
+
+        // LOCALIZACION (4-9)
+        Rule lCabeza = new Rule(brb, Const.BRB.RuleId.R4,
+                new Clause[]{new Clause(locCabeza, equal, Const.BRB.Values.SI),
+                        new Clause(locRespiratoria, equal, Const.BRB.Values.NO),
+                        new Clause(locDigestiva, equal, Const.BRB.Values.NO),
+                        new Clause(locInterna, equal, Const.BRB.Values.NO),
+                        new Clause(locUrinaria, equal, Const.BRB.Values.NO),
+                        new Clause(locCutanea, equal, Const.BRB.Values.NO)},
+                new Clause(localizacion, equal, Const.BRB.Facts.LOC_CABEZA));
+        Rule lRespiratoria = new Rule(brb, Const.BRB.RuleId.R5,
+                new Clause[]{new Clause(locCabeza, equal, Const.BRB.Values.NO),
+                        new Clause(locRespiratoria, equal, Const.BRB.Values.SI),
+                        new Clause(locDigestiva, equal, Const.BRB.Values.NO),
+                        new Clause(locInterna, equal, Const.BRB.Values.NO),
+                        new Clause(locUrinaria, equal, Const.BRB.Values.NO),
+                        new Clause(locCutanea, equal, Const.BRB.Values.NO)},
+                new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA));
+        Rule lDigestiva = new Rule(brb, Const.BRB.RuleId.R6,
+                new Clause[]{new Clause(locCabeza, equal, Const.BRB.Values.NO),
+                        new Clause(locRespiratoria, equal, Const.BRB.Values.NO),
+                        new Clause(locDigestiva, equal, Const.BRB.Values.SI),
+                        new Clause(locInterna, equal, Const.BRB.Values.NO),
+                        new Clause(locUrinaria, equal, Const.BRB.Values.NO),
+                        new Clause(locCutanea, equal, Const.BRB.Values.NO)},
+                new Clause(localizacion, equal, Const.BRB.Facts.LOC_DIGESTIVA));
+        Rule lInterna = new Rule(brb, Const.BRB.RuleId.R7,
+                new Clause[]{new Clause(locCabeza, equal, Const.BRB.Values.NO),
+                        new Clause(locRespiratoria, equal, Const.BRB.Values.NO),
+                        new Clause(locDigestiva, equal, Const.BRB.Values.NO),
+                        new Clause(locInterna, equal, Const.BRB.Values.SI),
+                        new Clause(locUrinaria, equal, Const.BRB.Values.NO),
+                        new Clause(locCutanea, equal, Const.BRB.Values.NO)},
+                new Clause(localizacion, equal, Const.BRB.Facts.LOC_INTERNA));
+        Rule lUrinaria= new Rule(brb, Const.BRB.RuleId.R8,
+                new Clause[]{new Clause(locCabeza, equal, Const.BRB.Values.NO),
+                        new Clause(locRespiratoria, equal, Const.BRB.Values.NO),
+                        new Clause(locDigestiva, equal, Const.BRB.Values.NO),
+                        new Clause(locInterna, equal, Const.BRB.Values.NO),
+                        new Clause(locUrinaria, equal, Const.BRB.Values.SI),
+                        new Clause(locCutanea, equal, Const.BRB.Values.NO)},
+                new Clause(localizacion, equal, Const.BRB.Facts.LOC_URINARIA));
+        Rule lCutanea = new Rule(brb, Const.BRB.RuleId.R9,
+                new Clause[]{new Clause(locCabeza, equal, Const.BRB.Values.NO),
+                        new Clause(locRespiratoria, equal, Const.BRB.Values.NO),
+                        new Clause(locDigestiva, equal, Const.BRB.Values.NO),
+                        new Clause(locInterna, equal, Const.BRB.Values.NO),
+                        new Clause(locUrinaria, equal, Const.BRB.Values.NO),
+                        new Clause(locCutanea, equal, Const.BRB.Values.SI)},
+                new Clause(localizacion, equal, Const.BRB.Facts.LOC_CUTANEA));
+
+        // ENFERMEDAD CON LOC_CABEZA (10-11)
+        Rule migrania = new Rule(brb, Const.BRB.RuleId.R10,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_CABEZA),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.SI),
+                        new Clause(presionArterialAlta, equal, Const.BRB.Values.SI),
+                        new Clause(zumbidoOidos, equal, Const.BRB.Values.SI),
+                        new Clause(nauseas, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.NO),
+                        new Clause(dolorOido, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.MIGRANIA));
-        Rule infeccionOido = new Rule(br, Const.BRB.Number.R8,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_ENCEFALICO),
-                        new Clause(dolorCabeza, equal, Const.BRB.NO),
-                        new Clause(presionArterialAlta, equal, Const.BRB.NO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(zumbidoOidos, equal, Const.BRB.SI),
-                        new Clause(nauseas, equal, Const.BRB.NO),
-                        new Clause(dolorGarganta, equal, Const.BRB.SI),
-                        new Clause(dolorOido, equal, Const.BRB.SI)},
+        Rule infeccionOido = new Rule(brb, Const.BRB.RuleId.R11,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_CABEZA),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.NO),
+                        new Clause(presionArterialAlta, equal, Const.BRB.Values.NO),
+                        new Clause(zumbidoOidos, equal, Const.BRB.Values.SI),
+                        new Clause(nauseas, equal, Const.BRB.Values.NO),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.SI),
+                        new Clause(dolorOido, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.INF_OIDO));
 
-        // ENFERMEDAD CON D.RESPIRATORIO
-        Rule gripeComun = new Rule(br, Const.BRB.Number.R9,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorGarganta, equal, Const.BRB.SI),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.SI),
-                        new Clause(fatiga, equal, Const.BRB.SI),
-                        new Clause(congestionNasal, equal, Const.BRB.SI),
-                        new Clause(dolorCabeza, equal, Const.BRB.SI),
-                        new Clause(dolorCorporal, equal, Const.BRB.SI),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.NO),
-                        new Clause(estornudos, equal, Const.BRB.SI),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.SI),
-                        new Clause(dolorEspalda, equal, Const.BRB.SI)},
+        // ENFERMEDAD CON LOC_RESPIRATORIA (12-19)
+        Rule gripeComun = new Rule(brb, Const.BRB.RuleId.R12,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA),
+                        new Clause(tos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.SI),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(escurrimientoNasal, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.SI),
+                        new Clause(congestionNasal, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCorporal, equal, Const.BRB.Values.SI),
+                        new Clause(dificultadRespiratoria, equal, Const.BRB.Values.NO),
+                        new Clause(estornudos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorArticulaciones, equal, Const.BRB.Values.SI),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.GRIPE_COMUN));
-        Rule bronquitis = new Rule(br, Const.BRB.Number.R10,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37_5),
-                        new Clause(dolorGarganta, equal, Const.BRB.SI),
-                        new Clause(dolorPecho, equal, Const.BRB.SI),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.SI),
-                        new Clause(fatiga, equal, Const.BRB.SI),
-                        new Clause(congestionNasal, equal, Const.BRB.NO),
-                        new Clause(dolorCabeza, equal, Const.BRB.NO),
-                        new Clause(dolorCorporal, equal, Const.BRB.NO),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.SI),
-                        new Clause(estornudos, equal, Const.BRB.NO),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.NO),
-                        new Clause(dolorEspalda, equal, Const.BRB.SI)},
+        Rule bronquitis = new Rule(brb, Const.BRB.RuleId.R13,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA),
+                        new Clause(tos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.SI),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.SI),
+                        new Clause(escurrimientoNasal, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.SI),
+                        new Clause(congestionNasal, equal, Const.BRB.Values.NO),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.NO),
+                        new Clause(dolorCorporal, equal, Const.BRB.Values.NO),
+                        new Clause(dificultadRespiratoria, equal, Const.BRB.Values.SI),
+                        new Clause(estornudos, equal, Const.BRB.Values.NO),
+                        new Clause(dolorArticulaciones, equal, Const.BRB.Values.NO),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.BRONQUITIS));
-        /*Rule tosConFlema = new Rule(br, Const.BRB.Number.R11,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.SI),
-                        new Clause(temperatura, equal, Const.BRB.NO),
-                        new Clause(dolorGarganta, equal, Const.BRB.SI),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(congestionNasal, equal, Const.BRB.SI),
-                        new Clause(dolorCabeza, equal, Const.BRB.NO),
-                        new Clause(dolorCorporal, equal, Const.BRB.NO),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.NO),
-                        new Clause(estornudos, equal, Const.BRB.NO),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.NO),
-                        new Clause(dolorEspalda, equal, Const.BRB.NO)},
-                new Clause(enfermedad, equal, Const.BRB.Facts.TOS_FLEMA));*/
-        Rule sinusitis = new Rule(br, Const.BRB.Number.R12,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.NO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorGarganta, equal, Const.BRB.SI),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.SI),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(congestionNasal, equal, Const.BRB.SI),
-                        new Clause(dolorCabeza, equal, Const.BRB.SI),
-                        new Clause(dolorCorporal, equal, Const.BRB.NO),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.NO),
-                        new Clause(estornudos, equal, Const.BRB.SI),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.NO),
-                        new Clause(dolorEspalda, equal, Const.BRB.NO)},
+        Rule sinusitis = new Rule(brb, Const.BRB.RuleId.R14,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA),
+                        new Clause(tos, equal, Const.BRB.Values.NO),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.SI),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(escurrimientoNasal, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.NO),
+                        new Clause(congestionNasal, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCorporal, equal, Const.BRB.Values.NO),
+                        new Clause(dificultadRespiratoria, equal, Const.BRB.Values.NO),
+                        new Clause(estornudos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorArticulaciones, equal, Const.BRB.Values.NO),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.SINUSITIS));
-        Rule influenza = new Rule(br, Const.BRB.Number.R13,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorGarganta, equal, Const.BRB.SI),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.SI),
-                        new Clause(fatiga, equal, Const.BRB.SI),
-                        new Clause(congestionNasal, equal, Const.BRB.SI),
-                        new Clause(dolorCabeza, equal, Const.BRB.SI),
-                        new Clause(dolorCorporal, equal, Const.BRB.SI),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.SI),
-                        new Clause(estornudos, equal, Const.BRB.SI),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.SI),
-                        new Clause(dolorEspalda, equal, Const.BRB.SI)},
+        Rule influenza = new Rule(brb, Const.BRB.RuleId.R15,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA),
+                        new Clause(tos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.SI),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(escurrimientoNasal, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.SI),
+                        new Clause(congestionNasal, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCorporal, equal, Const.BRB.Values.SI),
+                        new Clause(dificultadRespiratoria, equal, Const.BRB.Values.SI),
+                        new Clause(estornudos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorArticulaciones, equal, Const.BRB.Values.SI),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.INFLUENZA));
-        Rule sinusitisBacteriana = new Rule(br, Const.BRB.Number.R14,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorGarganta, equal, Const.BRB.SI),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.SI),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(congestionNasal, equal, Const.BRB.SI),
-                        new Clause(dolorCabeza, equal, Const.BRB.SI),
-                        new Clause(dolorCorporal, equal, Const.BRB.NO),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.NO),
-                        new Clause(estornudos, equal, Const.BRB.SI),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.NO),
-                        new Clause(dolorEspalda, equal, Const.BRB.NO)},
+        Rule sinusitisBacteriana = new Rule(brb, Const.BRB.RuleId.R16,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA),
+                        new Clause(tos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.SI),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(escurrimientoNasal, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.NO),
+                        new Clause(congestionNasal, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCorporal, equal, Const.BRB.Values.NO),
+                        new Clause(dificultadRespiratoria, equal, Const.BRB.Values.NO),
+                        new Clause(estornudos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorArticulaciones, equal, Const.BRB.Values.NO),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.SINUSITIS_BAC));
-        Rule neumonia = new Rule(br, Const.BRB.Number.R15,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorGarganta, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.SI),
-                        new Clause(congestionNasal, equal, Const.BRB.NO),
-                        new Clause(dolorCabeza, equal, Const.BRB.SI),
-                        new Clause(dolorCorporal, equal, Const.BRB.SI),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.SI),
-                        new Clause(estornudos, equal, Const.BRB.NO),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.SI),
-                        new Clause(dolorEspalda, equal, Const.BRB.SI)},
+        Rule neumonia = new Rule(brb, Const.BRB.RuleId.R17,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA),
+                        new Clause(tos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(escurrimientoNasal, equal, Const.BRB.Values.NO),
+                        new Clause(fatiga, equal, Const.BRB.Values.SI),
+                        new Clause(congestionNasal, equal, Const.BRB.Values.NO),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCorporal, equal, Const.BRB.Values.SI),
+                        new Clause(dificultadRespiratoria, equal, Const.BRB.Values.SI),
+                        new Clause(estornudos, equal, Const.BRB.Values.NO),
+                        new Clause(dolorArticulaciones, equal, Const.BRB.Values.SI),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.NEUMONIA));
-        Rule fibrosisPulmonar = new Rule(br, Const.BRB.Number.R16,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_36),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37),
-                        new Clause(dolorGarganta, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.SI),
-                        new Clause(congestionNasal, equal, Const.BRB.NO),
-                        new Clause(dolorCabeza, equal, Const.BRB.NO),
-                        new Clause(dolorCorporal, equal, Const.BRB.SI),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.SI),
-                        new Clause(estornudos, equal, Const.BRB.NO),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.SI),
-                        new Clause(dolorEspalda, equal, Const.BRB.SI)},
+        Rule fibrosisPulmonar = new Rule(brb, Const.BRB.RuleId.R18,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA),
+                        new Clause(tos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(escurrimientoNasal, equal, Const.BRB.Values.NO),
+                        new Clause(fatiga, equal, Const.BRB.Values.SI),
+                        new Clause(congestionNasal, equal, Const.BRB.Values.NO),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.NO),
+                        new Clause(dolorCorporal, equal, Const.BRB.Values.SI),
+                        new Clause(dificultadRespiratoria, equal, Const.BRB.Values.SI),
+                        new Clause(estornudos, equal, Const.BRB.Values.NO),
+                        new Clause(dolorArticulaciones, equal, Const.BRB.Values.SI),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.FIBROSIS_PUL));
-        Rule bronquiolitis = new Rule(br, Const.BRB.Number.R17,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_RESPIRATORIO),
-                        new Clause(tos, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorGarganta, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(escurrimientoNasal, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(congestionNasal, equal, Const.BRB.NO),
-                        new Clause(dolorCabeza, equal, Const.BRB.SI),
-                        new Clause(dolorCorporal, equal, Const.BRB.NO),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.SI),
-                        new Clause(estornudos, equal, Const.BRB.NO),
-                        new Clause(dolorArticulaciones, equal, Const.BRB.NO),
-                        new Clause(dolorEspalda, equal, Const.BRB.NO)},
+        Rule bronquiolitis = new Rule(brb, Const.BRB.RuleId.R19,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_RESPIRATORIA),
+                        new Clause(tos, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(escurrimientoNasal, equal, Const.BRB.Values.NO),
+                        new Clause(fatiga, equal, Const.BRB.Values.NO),
+                        new Clause(congestionNasal, equal, Const.BRB.Values.NO),
+                        new Clause(dolorCabeza, equal, Const.BRB.Values.SI),
+                        new Clause(dolorCorporal, equal, Const.BRB.Values.NO),
+                        new Clause(dificultadRespiratoria, equal, Const.BRB.Values.SI),
+                        new Clause(estornudos, equal, Const.BRB.Values.NO),
+                        new Clause(dolorArticulaciones, equal, Const.BRB.Values.NO),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.BRONQUIOLOTIS));
 
-        // ENFERMEDAD CON D.DIGESTIVO
-        Rule infeccionEstomago = new Rule(br, Const.BRB.Number.R18,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_DIGESTIVO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorAbdominal, equal, Const.BRB.SI),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.SI),
-                        new Clause(nauseas, equal, Const.BRB.SI),
-                        new Clause(acidezEstomacal, equal, Const.BRB.NO),
-                        new Clause(vomito, equal, Const.BRB.SI),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.NO),
-                        new Clause(diarrea, equal, Const.BRB.SI),
-                        new Clause(evacuacionesConDolor, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO)},
-                new Clause(enfermedad, equal, Const.BRB.Facts.INF_ESTOMAGO));
-        Rule estrenimiento = new Rule(br, Const.BRB.Number.R19,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_DIGESTIVO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_36),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37),
-                        new Clause(dolorAbdominal, equal, Const.BRB.SI),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.NO),
-                        new Clause(nauseas, equal, Const.BRB.NO),
-                        new Clause(acidezEstomacal, equal, Const.BRB.NO),
-                        new Clause(vomito, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.NO),
-                        new Clause(diarrea, equal, Const.BRB.NO),
-                        new Clause(evacuacionesConDolor, equal, Const.BRB.SI),
-                        new Clause(dolorPecho, equal, Const.BRB.NO)},
+        // ENFERMEDAD CON LOC_DIGESTIVA (20-24)
+        Rule infeccionEstomacal = new Rule(brb, Const.BRB.RuleId.R20,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_DIGESTIVA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.SI),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.SI),
+                        new Clause(nauseas, equal, Const.BRB.Values.SI),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.NO),
+                        new Clause(vomito, equal, Const.BRB.Values.SI),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.NO),
+                        new Clause(diarrea, equal, Const.BRB.Values.SI),
+                        new Clause(evacuacionesConDolor, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO)},
+                new Clause(enfermedad, equal, Const.BRB.Facts.INF_ESTOMACAL));
+        Rule estrenimiento = new Rule(brb, Const.BRB.RuleId.R21,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_DIGESTIVA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.SI),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.NO),
+                        new Clause(nauseas, equal, Const.BRB.Values.NO),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.NO),
+                        new Clause(vomito, equal, Const.BRB.Values.NO),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.NO),
+                        new Clause(diarrea, equal, Const.BRB.Values.NO),
+                        new Clause(evacuacionesConDolor, equal, Const.BRB.Values.SI),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.ESTRENIMIENTO));
-        Rule indigestion = new Rule(br, Const.BRB.Number.R20,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_DIGESTIVO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_36),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37),
-                        new Clause(dolorAbdominal, equal, Const.BRB.SI),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.NO),
-                        new Clause(nauseas, equal, Const.BRB.SI),
-                        new Clause(acidezEstomacal, equal, Const.BRB.SI),
-                        new Clause(vomito, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.NO),
-                        new Clause(diarrea, equal, Const.BRB.NO),
-                        new Clause(evacuacionesConDolor, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO)},
+        Rule indigestion = new Rule(brb, Const.BRB.RuleId.R22,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_DIGESTIVA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.SI),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.NO),
+                        new Clause(nauseas, equal, Const.BRB.Values.SI),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.SI),
+                        new Clause(vomito, equal, Const.BRB.Values.NO),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.NO),
+                        new Clause(diarrea, equal, Const.BRB.Values.NO),
+                        new Clause(evacuacionesConDolor, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.INDIGESTION));
-        Rule gastritis = new Rule(br, Const.BRB.Number.R21,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_DIGESTIVO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_36),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37),
-                        new Clause(dolorAbdominal, equal, Const.BRB.SI),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.NO),
-                        new Clause(nauseas, equal, Const.BRB.NO),
-                        new Clause(acidezEstomacal, equal, Const.BRB.SI),
-                        new Clause(vomito, equal, Const.BRB.SI),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.SI),
-                        new Clause(diarrea, equal, Const.BRB.NO),
-                        new Clause(evacuacionesConDolor, equal, Const.BRB.SI),
-                        new Clause(dolorPecho, equal, Const.BRB.SI)},
+        Rule gastritis = new Rule(brb, Const.BRB.RuleId.R23,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_DIGESTIVA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.SI),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.NO),
+                        new Clause(nauseas, equal, Const.BRB.Values.NO),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.SI),
+                        new Clause(vomito, equal, Const.BRB.Values.SI),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.SI),
+                        new Clause(diarrea, equal, Const.BRB.Values.NO),
+                        new Clause(evacuacionesConDolor, equal, Const.BRB.Values.SI),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.GASTRITIS));
-        Rule colitis = new Rule(br, Const.BRB.Number.R22,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_DIGESTIVO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37),
-                        new Clause(dolorAbdominal, equal, Const.BRB.SI),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.NO),
-                        new Clause(nauseas, equal, Const.BRB.NO),
-                        new Clause(acidezEstomacal, equal, Const.BRB.NO),
-                        new Clause(vomito, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.SI),
-                        new Clause(diarrea, equal, Const.BRB.SI),
-                        new Clause(evacuacionesConDolor, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO)},
+        Rule colitis = new Rule(brb, Const.BRB.RuleId.R24,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_DIGESTIVA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.SI),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.NO),
+                        new Clause(nauseas, equal, Const.BRB.Values.NO),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.NO),
+                        new Clause(vomito, equal, Const.BRB.Values.NO),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.SI),
+                        new Clause(diarrea, equal, Const.BRB.Values.SI),
+                        new Clause(evacuacionesConDolor, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.COLITIS));
 
-        // ENFERMEDAD CON D.INTERNO
-        Rule apendicitis = new Rule(br, Const.BRB.Number.R23,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_INTERNO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorAbdominal, equal, Const.BRB.SI),
-                        new Clause(nauseas, equal, Const.BRB.SI),
-                        new Clause(vomito, equal, Const.BRB.SI),
-                        new Clause(tos, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(acidezEstomacal, equal, Const.BRB.NO),
-                        new Clause(dolorEspalda, equal, Const.BRB.NO),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.SI),
-                        new Clause(dolorGarganta, equal, Const.BRB.NO),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.NO),
-                        new Clause(diarrea, equal, Const.BRB.NO)},
+        // ENFERMEDAD CON LOC_INTERNA (25-28)
+        Rule apendicitis = new Rule(brb, Const.BRB.RuleId.R25,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_INTERNA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.SI),
+                        new Clause(nauseas, equal, Const.BRB.Values.SI),
+                        new Clause(vomito, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.NO),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.NO),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.SI),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.NO),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.NO),
+                        new Clause(diarrea, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.APENDICITIS));
-        Rule esofagitis = new Rule(br, Const.BRB.Number.R24,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_INTERNO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_36),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37),
-                        new Clause(dolorAbdominal, equal, Const.BRB.SI),
-                        new Clause(nauseas, equal, Const.BRB.SI),
-                        new Clause(vomito, equal, Const.BRB.SI),
-                        new Clause(tos, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.SI),
-                        new Clause(acidezEstomacal, equal, Const.BRB.SI),
-                        new Clause(dolorEspalda, equal, Const.BRB.NO),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.NO),
-                        new Clause(dolorGarganta, equal, Const.BRB.SI),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.NO),
-                        new Clause(diarrea, equal, Const.BRB.NO)},
+        Rule esofagitis = new Rule(brb, Const.BRB.RuleId.R26,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_INTERNA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.SI),
+                        new Clause(nauseas, equal, Const.BRB.Values.SI),
+                        new Clause(vomito, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.SI),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.SI),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.NO),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.NO),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.SI),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.NO),
+                        new Clause(diarrea, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.ESOFAGITIS));
-        Rule pancreatitis = new Rule(br, Const.BRB.Number.R25,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_INTERNO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5),
-                        new Clause(dolorAbdominal, equal, Const.BRB.SI),
-                        new Clause(nauseas, equal, Const.BRB.SI),
-                        new Clause(vomito, equal, Const.BRB.SI),
-                        new Clause(tos, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(acidezEstomacal, equal, Const.BRB.NO),
-                        new Clause(dolorEspalda, equal, Const.BRB.SI),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.NO),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.NO),
-                        new Clause(dolorGarganta, equal, Const.BRB.NO),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.SI),
-                        new Clause(diarrea, equal, Const.BRB.SI)},
+        Rule pancreatitis = new Rule(brb, Const.BRB.RuleId.R27,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_INTERNA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.SI),
+                        new Clause(nauseas, equal, Const.BRB.Values.SI),
+                        new Clause(vomito, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.NO),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.NO),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.SI),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.NO),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.NO),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.SI),
+                        new Clause(diarrea, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.PANCREATITIS));
-        Rule anemia = new Rule(br, Const.BRB.Number.R26,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_INTERNO),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_36),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37),
-                        new Clause(dolorAbdominal, equal, Const.BRB.NO),
-                        new Clause(nauseas, equal, Const.BRB.NO),
-                        new Clause(vomito, equal, Const.BRB.SI),
-                        new Clause(tos, equal, Const.BRB.NO),
-                        new Clause(dolorPecho, equal, Const.BRB.NO),
-                        new Clause(acidezEstomacal, equal, Const.BRB.NO),
-                        new Clause(dolorEspalda, equal, Const.BRB.NO),
-                        new Clause(dificultadRespiratoria, equal, Const.BRB.NO),
-                        new Clause(fatiga, equal, Const.BRB.SI),
-                        new Clause(evacuacionesConstantes, equal, Const.BRB.NO),
-                        new Clause(dolorGarganta, equal, Const.BRB.NO),
-                        new Clause(hemorragiaRectal, equal, Const.BRB.NO),
-                        new Clause(diarrea, equal, Const.BRB.NO)},
+        Rule anemia = new Rule(brb, Const.BRB.RuleId.R28,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_INTERNA),
+                        new Clause(dolorAbdominal, equal, Const.BRB.Values.NO),
+                        new Clause(nauseas, equal, Const.BRB.Values.NO),
+                        new Clause(vomito, equal, Const.BRB.Values.SI),
+                        new Clause(fatiga, equal, Const.BRB.Values.SI),
+                        new Clause(dolorPecho, equal, Const.BRB.Values.NO),
+                        new Clause(acidezEstomacal, equal, Const.BRB.Values.NO),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.NO),
+                        new Clause(evacuacionesConstantes, equal, Const.BRB.Values.NO),
+                        new Clause(dolorGarganta, equal, Const.BRB.Values.NO),
+                        new Clause(hemorragiaRectal, equal, Const.BRB.Values.NO),
+                        new Clause(diarrea, equal, Const.BRB.Values.NO)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.ANEMIA));
 
-        // ENFERMEDAD CON D.URINARIO
-        Rule infeccionUrinaria = new Rule(br, Const.BRB.Number.R27,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_URINARIO),
-                        new Clause(nauseas, equal, Const.BRB.SI),
-                        new Clause(dolorAlOrinar, equal, Const.BRB.SI),
-                        new Clause(sangradoAlOrinar, equal, Const.BRB.SI),
-                        new Clause(dolorEspalda, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_37_5)},
+        // ENFERMEDAD CON LOC_URINARIA (29)
+        Rule infeccionUrinaria = new Rule(brb, Const.BRB.RuleId.R29,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.FIEBRE),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_URINARIA),
+                        new Clause(nauseas, equal, Const.BRB.Values.SI),
+                        new Clause(dolorAlOrinar, equal, Const.BRB.Values.SI),
+                        new Clause(sangradoAlOrinar, equal, Const.BRB.Values.SI),
+                        new Clause(dolorEspalda, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.INF_URINARIA));
 
-        // ENFERMEDAD CON D.CUTANEO
-        Rule infeccionPiel = new Rule(br, Const.BRB.Number.R28,
-                new Clause[]{new Clause(afeccion, equal, Const.BRB.Facts.D_CUTANEO),
-                        new Clause(pielEnrogecida, equal, Const.BRB.SI),
-                        new Clause(inflamacionZona, equal, Const.BRB.SI),
-                        new Clause(altaSensibilidadZona, equal, Const.BRB.SI),
-                        new Clause(temperatura, greater, Const.BRB.TEMP_36),
-                        new Clause(temperatura, less, Const.BRB.TEMP_37)},
+        // ENFERMEDAD CON LOC_CUTANEA (30)
+        Rule infeccionPiel = new Rule(brb, Const.BRB.RuleId.R30,
+                new Clause[]{new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL),
+                        new Clause(localizacion, equal, Const.BRB.Facts.LOC_CUTANEA),
+                        new Clause(pielEnrogecida, equal, Const.BRB.Values.SI),
+                        new Clause(inflamacionZona, equal, Const.BRB.Values.SI),
+                        new Clause(altaSensibilidadZona, equal, Const.BRB.Values.SI)},
                 new Clause(enfermedad, equal, Const.BRB.Facts.INF_PIEL));
     }
 }

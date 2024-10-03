@@ -2,16 +2,45 @@ package ovh.serial30.diagnocom.pojos.dto;
 
 import ovh.serial30.diagnocom.configuration.Const;
 
-public class DigestiveOptions {
-    public Option _1 = new Option(Const.BRB.Symptoms.temperatura, "Temperatura", Const.BRB.TEMP_INI);
-    public Option _2 = new Option(Const.BRB.Symptoms.dolorAbdominal, "Dolor en el abdomen", Const.BRB.NO);
-    public Option _3 = new Option(Const.BRB.Symptoms.evacuacionesConstantes, "Evacuaciones constantes", Const.BRB.NO);
-    public Option _4 = new Option(Const.BRB.Symptoms.nauseas, "Nauseas", Const.BRB.NO);
-    public Option _5 = new Option(Const.BRB.Symptoms.acidezEstomacal, "Acidez estomacal", Const.BRB.NO);
-    public Option _6 = new Option(Const.BRB.Symptoms.vomito, "Vomito", Const.BRB.NO);
-    public Option _7 = new Option(Const.BRB.Symptoms.fatiga, "Fatíga", Const.BRB.NO);
-    public Option _8 = new Option(Const.BRB.Symptoms.hemorragiaRectal, "Hemorragia rectal", Const.BRB.NO);
-    public Option _9 = new Option(Const.BRB.Symptoms.diarrea, "Diarrea", Const.BRB.NO);
-    public Option _10 = new Option(Const.BRB.Symptoms.evacuacionesConDolor, "Evacuaciones con dolor", Const.BRB.NO);
-    public Option _11 = new Option(Const.BRB.Symptoms.dolorPecho, "Dolor en el pecho", Const.BRB.NO);
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
+public class DigestiveOptions extends GeneralOptions {
+    public final OptVariable dolorAbdominal;
+    public final OptVariable evacuacionesConstantes;
+    public final OptVariable nauseas;
+    public final OptVariable acidezEstomacal;
+    public final OptVariable vomito;
+    public final OptVariable hemorragiaRectal;
+    public final OptVariable diarrea;
+    public final OptVariable evacuacionesConDolor;
+    public final OptVariable dolorPecho;
+    private final ArrayList<OptVariable> digestiveOpts;
+
+    public DigestiveOptions() { // not calling super(); due to super-class having an explicit default constructor
+        localizacion.setValue(Const.BRB.Facts.LOC_DIGESTIVA);
+        dolorAbdominal = new OptVariable(Const.BRB.VarName.dolorAbdominal, "Dolor en el abdomen", Const.BRB.Values.NO);
+        evacuacionesConstantes = new OptVariable(Const.BRB.VarName.evacuacionesConstantes, "Evacuaciones constantes", Const.BRB.Values.NO);
+        nauseas = new OptVariable(Const.BRB.VarName.nauseas, "Nauseas", Const.BRB.Values.NO);
+        acidezEstomacal = new OptVariable(Const.BRB.VarName.acidezEstomacal, "Acidez estomacal", Const.BRB.Values.NO);
+        vomito = new OptVariable(Const.BRB.VarName.vomito, "Vomito", Const.BRB.Values.NO);
+        hemorragiaRectal = new OptVariable(Const.BRB.VarName.hemorragiaRectal, "Hemorragia rectal", Const.BRB.Values.NO);
+        diarrea = new OptVariable(Const.BRB.VarName.diarrea, "Diarrea", Const.BRB.Values.NO);
+        evacuacionesConDolor = new OptVariable(Const.BRB.VarName.evacuacionesConDolor, "Evacuaciones con dolor", Const.BRB.Values.NO);
+        dolorPecho = new OptVariable(Const.BRB.VarName.dolorPecho, "Dolor en el pecho", Const.BRB.Values.NO);
+        this.digestiveOpts = new ArrayList<>(Arrays.asList(
+                dolorAbdominal, evacuacionesConstantes, nauseas, acidezEstomacal, vomito,
+                hemorragiaRectal, diarrea, evacuacionesConDolor, dolorPecho
+        ));
+    }
+
+    @Override
+    public void matchUserOptions(Map<String, String> data) {
+        for (String dataVarName: data.keySet()) {
+            digestiveOpts.forEach(opt -> {
+                if (opt.getName().equals(dataVarName)) opt.setValue(data.get(dataVarName));
+            });
+        }
+    }
 }

@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * Representacion de los datos salientes de la API
+ */
 @Getter @Setter
 public class MessageResponse {
     private int status = 200;

@@ -1,5 +1,8 @@
 package ovh.serial30.diagnocom.configuration;
 
+/**
+ * Clase que concentra las cadenas de texto como constantes
+ */
 public abstract class Const {
 
     public interface Logs {
@@ -9,7 +12,6 @@ public abstract class Const {
         String INVALID_TOKEN = "Token de usuario inválido!";
         String USER_NOT_FOUND = "Usuario no encontrado!";
         String WRONG_PASSWORD = "Contraseña actual incorrecta!";
-        String VALID_TEMP = "Compruebe la temperatura ingresada!";
     }
 
     public interface Routes {
@@ -39,19 +41,25 @@ public abstract class Const {
         String EMAIL = "email";
         String CREATED_AT = "created_at";
         String LAST_LOGIN = "last_login";
+        String TABLE_RESULTS = "results";
+        String JPQL_RESULTS = "RESULTS";
+        String RESULT_ID = "result_id";
+        String CONTENT = "content";
     }
 
     public interface BRB {
-        String SI = "si";
-        String NO = "no";
-        String afeccion = "afeccion";
-        String enfermedad = "enfermedad";
-        String TEMP_INI = "37.0";
-        String TEMP_36 = "35.99";
-        String TEMP_37 = "37.01";
-        String TEMP_37_5 = "37.49";
+        interface Values {
+            String SI = "si";
+            String NO = "no";
+            String CHAINING = "chaining";
+            String THIRD = "third";
+            String TEMP_35_9 = "35.9";
+            String TEMP_36 = "36.0";
+            String TEMP_37 = "37.0";
+            String TEMP_37_5 = "37.5";
+        }
 
-        interface Number {
+        interface RuleId {
             String R1 = "R1";
             String R2 = "R2";
             String R3 = "R3";
@@ -80,18 +88,20 @@ public abstract class Const {
             String R26 = "R26";
             String R27 = "R27";
             String R28 = "R28";
+            String R29 = "R29";
+            String R30 = "R30";
         }
 
-        interface Symptoms {
-            String afeccionCabeza = "afeccionCabeza";
-            String afeccionRespiratoria = "afeccionRespiratoria";
-            String afeccionDigestiva = "afeccionDigestiva";
-            String afeccionInterna ="afeccionInterna";
-            String afeccionUrinaria = "afeccionUrinaria";
-            String afeccionPiel = "afeccionPiel";
+        interface VarName {
+            String grados = "grados";
+            String locCabeza = "locCabeza";
+            String locRespiratoria = "locRespiratoria";
+            String locDigestiva = "locDigestiva";
+            String locInterna ="locInterna";
+            String locUrinaria = "locUrinaria";
+            String locCutanea = "locCutanea";
             String dolorCabeza = "dolorCabeza";
             String presionArterialAlta = "presionArterialAlta";
-            String temperatura = "temperatura";
             String zumbidoOidos = "zumbidoOidos";
             String nauseas = "nauseas";
             String dolorGarganta = "dolorGarganta";
@@ -121,24 +131,29 @@ public abstract class Const {
         }
 
         interface Facts {
-            String D_ENCEFALICO = "Diagnóstico Encefálico";
-            String D_RESPIRATORIO = "Diagnóstico Respiratorio";
-            String D_DIGESTIVO = "Diagnóstico Digestivo";
-            String D_INTERNO = "Diagnóstico Interno";
-            String D_URINARIO = "Diagnóstico Urinario";
-            String D_CUTANEO = "Diagnóstico Cutáneo";
+            String TEMPERATURA = "temperatura";
+            String LOCALIZACION = "localizacion";
+            String ENFERMEDAD = "enfermedad";
+            String HIPOTERMIA = "Hipotermia";
+            String TEMP_NORMAL = "Normal";
+            String FIEBRE = "Fiebre";
+            String LOC_CABEZA = "cabeza";
+            String LOC_RESPIRATORIA = "respiratoria";
+            String LOC_DIGESTIVA = "digestiva";
+            String LOC_INTERNA = "interna";
+            String LOC_URINARIA = "urinaria";
+            String LOC_CUTANEA = "cutánea";
             String MIGRANIA = "Migraña";
             String INF_OIDO = "Infección de oido";
             String GRIPE_COMUN = "Gripe común";
             String BRONQUITIS = "Bronquitis";
-            String TOS_FLEMA = "Tos con flema";
             String SINUSITIS = "Sinusitis";
             String INFLUENZA = "Influenza";
             String SINUSITIS_BAC = "Sinusitis bacteriana";
             String NEUMONIA = "Neumonía";
             String FIBROSIS_PUL = "Fibrosis pulmonar";
             String BRONQUIOLOTIS = "Bronquiolitis";
-            String INF_ESTOMAGO = "Infección de estómago";
+            String INF_ESTOMACAL = "Infección estomacal";
             String ESTRENIMIENTO = "Estreñimiento";
             String INDIGESTION = "Indigestión";
             String GASTRITIS = "Gastritis";

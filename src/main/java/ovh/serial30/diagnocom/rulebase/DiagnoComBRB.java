@@ -1,66 +1,86 @@
 package ovh.serial30.diagnocom.rulebase;
 
 import Rule.BooleanRuleBase;
-import org.springframework.http.HttpStatus;
 import ovh.serial30.diagnocom.configuration.Const;
-import ovh.serial30.diagnocom.exceptions.FactAnalysisException;
 
+import javax.swing.JTextArea;
+import java.util.Arrays;
 import java.util.Map;
+
 import static java.util.Map.entry;
 
+/**
+ * Clase que emula la base de reglas
+ */
 public class DiagnoComBRB extends DiagnoComVariableSet {
-    // Declaracion BASE DE REGLAS
-    private final BooleanRuleBase br;
+    private final BooleanRuleBase brb; // Declaracion BASE DE REGLAS
 
-    // Constructor
+    /**
+     * Crea la instancia de la base de reglas
+     */
     public DiagnoComBRB() {
-        br = new BooleanRuleBase("diagnocom");
-        starterBR(br); // Inicializa la base de reglas
+        brb = new BooleanRuleBase("diagnocom");
+        starterBR(brb);
 
         // Mapea las variables con su nombre
-        variables = Map.ofEntries(
-            entry(Const.BRB.afeccion, afeccion), entry(Const.BRB.Symptoms.afeccionCabeza, afeccionCabeza),
-            entry(Const.BRB.Symptoms.afeccionRespiratoria, afeccionRespiratoria), entry(Const.BRB.Symptoms.afeccionDigestiva, afeccionDigestiva),
-            entry(Const.BRB.Symptoms.afeccionInterna, afeccionInterna), entry(Const.BRB.Symptoms.afeccionUrinaria, afeccionUrinaria),
-            entry(Const.BRB.Symptoms.afeccionPiel, afeccionPiel), entry(Const.BRB.Symptoms.dolorCabeza, dolorCabeza),
-            entry(Const.BRB.Symptoms.presionArterialAlta, presionArterialAlta), entry(Const.BRB.Symptoms.temperatura, temperatura),
-            entry(Const.BRB.Symptoms.zumbidoOidos, zumbidoOidos), entry(Const.BRB.Symptoms.nauseas, nauseas),
-            entry(Const.BRB.Symptoms.dolorGarganta, dolorGarganta), entry(Const.BRB.Symptoms.dolorOido, dolorOido),
-            entry(Const.BRB.Symptoms.tos, tos), entry(Const.BRB.Symptoms.estornudos, estornudos),
-            entry(Const.BRB.Symptoms.dolorArticulaciones, dolorArticulaciones), entry(Const.BRB.Symptoms.dolorEspalda, dolorEspalda),
-            entry(Const.BRB.Symptoms.dolorPecho, dolorPecho), entry(Const.BRB.Symptoms.escurrimientoNasal, escurrimientoNasal),
-            entry(Const.BRB.Symptoms.fatiga, fatiga), entry(Const.BRB.Symptoms.congestionNasal, congestionNasal),
-            entry(Const.BRB.Symptoms.dolorCorporal, dolorCorporal), entry(Const.BRB.Symptoms.dificultadRespiratoria, dificultadRespiratoria),
-            entry(Const.BRB.Symptoms.dolorAbdominal, dolorAbdominal), entry(Const.BRB.Symptoms.evacuacionesConstantes, evacuacionesConstantes),
-            entry(Const.BRB.Symptoms.acidezEstomacal, acidezEstomacal), entry(Const.BRB.Symptoms.vomito, vomito),
-            entry(Const.BRB.Symptoms.hemorragiaRectal, hemorragiaRectal), entry(Const.BRB.Symptoms.diarrea, diarrea),
-            entry(Const.BRB.Symptoms.evacuacionesConDolor, evacuacionesConDolor), entry(Const.BRB.Symptoms.dolorAlOrinar, dolorAlOrinar),
-            entry(Const.BRB.Symptoms.sangradoAlOrinar, sangradoAlOrinar), entry(Const.BRB.Symptoms.pielEnrogecida, pielEnrogecida),
-            entry(Const.BRB.Symptoms.inflamacionZona, inflamacionZona), entry(Const.BRB.Symptoms.altaSensibilidadZona, altaSensibilidadZona)
+        variables = Map.ofEntries(entry(Const.BRB.VarName.grados, grados),
+            entry(Const.BRB.Facts.TEMPERATURA, temperatura), entry(Const.BRB.Facts.LOCALIZACION, localizacion),
+            entry(Const.BRB.VarName.locCabeza, locCabeza), entry(Const.BRB.VarName.locRespiratoria, locRespiratoria),
+            entry(Const.BRB.VarName.locDigestiva, locDigestiva), entry(Const.BRB.VarName.locInterna, locInterna),
+            entry(Const.BRB.VarName.locUrinaria, locUrinaria), entry(Const.BRB.VarName.locCutanea, locCutanea),
+            entry(Const.BRB.VarName.dolorCabeza, dolorCabeza), entry(Const.BRB.VarName.presionArterialAlta, presionArterialAlta),
+            entry(Const.BRB.VarName.zumbidoOidos, zumbidoOidos), entry(Const.BRB.VarName.nauseas, nauseas),
+            entry(Const.BRB.VarName.dolorGarganta, dolorGarganta), entry(Const.BRB.VarName.dolorOido, dolorOido),
+            entry(Const.BRB.VarName.tos, tos), entry(Const.BRB.VarName.estornudos, estornudos),
+            entry(Const.BRB.VarName.dolorArticulaciones, dolorArticulaciones), entry(Const.BRB.VarName.dolorEspalda, dolorEspalda),
+            entry(Const.BRB.VarName.dolorPecho, dolorPecho), entry(Const.BRB.VarName.escurrimientoNasal, escurrimientoNasal),
+            entry(Const.BRB.VarName.fatiga, fatiga), entry(Const.BRB.VarName.congestionNasal, congestionNasal),
+            entry(Const.BRB.VarName.dolorCorporal, dolorCorporal), entry(Const.BRB.VarName.dificultadRespiratoria, dificultadRespiratoria),
+            entry(Const.BRB.VarName.dolorAbdominal, dolorAbdominal), entry(Const.BRB.VarName.evacuacionesConstantes, evacuacionesConstantes),
+            entry(Const.BRB.VarName.acidezEstomacal, acidezEstomacal), entry(Const.BRB.VarName.vomito, vomito),
+            entry(Const.BRB.VarName.hemorragiaRectal, hemorragiaRectal), entry(Const.BRB.VarName.diarrea, diarrea),
+            entry(Const.BRB.VarName.evacuacionesConDolor, evacuacionesConDolor), entry(Const.BRB.VarName.dolorAlOrinar, dolorAlOrinar),
+            entry(Const.BRB.VarName.sangradoAlOrinar, sangradoAlOrinar), entry(Const.BRB.VarName.pielEnrogecida, pielEnrogecida),
+            entry(Const.BRB.VarName.inflamacionZona, inflamacionZona), entry(Const.BRB.VarName.altaSensibilidadZona, altaSensibilidadZona)
         );
     }
 
+    public String getRules() {
+        var temp = new JTextArea();
+        brb.displayRules(temp);
+        return Arrays.toString(temp.getText()
+                .replaceAll("diagnocom Rule Base", "Base de reglas: diagnocom")
+                .replaceAll("IF", "SI")
+                .replaceAll("AND", "Y")
+                .replaceAll("THEN", "ENTONCES")
+                .split("R"));
+    }
+
     @Override
-    public void insertChoices(Map<String, String> choices) throws FactAnalysisException {
+    public DiagnoComBRB insertChoices(Map<String, String> choices) {
+        brb.reset();
         for (String variable : choices.keySet()) {
-            if (variable.equals(Const.BRB.Symptoms.temperatura) &&
-                Float.parseFloat(choices.get(variable)) < Float.parseFloat(Const.BRB.TEMP_36))
-                throw new FactAnalysisException(HttpStatus.INTERNAL_SERVER_ERROR.value(), Const.Logs.VALID_TEMP);
+            if (variable.equals(Const.BRB.Values.CHAINING)) continue;
             variables.get(variable).setValue(choices.get(variable));
         }
+        return this;
     }
 
     @Override
-    public String getCondition() {
-        br.forwardChain(); // Realiza el encadenamiento hacia adelante
-        nameHecho = afeccion.getValue();
-        return nameHecho;
+    public String getTemperatura() {
+        brb.forwardChain();
+        return temperatura.getValue();
     }
 
     @Override
-    public String getIllness() {
-        br.forwardChain();
-        nameHecho = enfermedad.getValue();
-        return nameHecho;
+    public String getLocalizacion() {
+        brb.forwardChain();
+        return localizacion.getValue();
+    }
+
+    @Override
+    public String getEnfermedad() {
+        brb.forwardChain();
+        return enfermedad.getValue();
     }
 }

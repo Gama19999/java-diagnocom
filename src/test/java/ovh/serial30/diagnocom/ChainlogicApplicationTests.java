@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ChainlogicApplicationTests {
 
     @Test
-    void contextLoads() {
-    }
+    void test() {}
 
 }

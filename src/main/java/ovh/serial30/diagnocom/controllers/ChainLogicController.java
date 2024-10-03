@@ -1,5 +1,6 @@
 package ovh.serial30.diagnocom.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ovh.serial30.diagnocom.configuration.Const;
@@ -25,7 +26,7 @@ public class ChainLogicController {
             path = Const.Routes.FORWARD,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> doForwardChaining(@RequestBody IncomingData data) throws FactAnalysisException {
+    public ResponseEntity<?> doForwardChaining(@RequestBody IncomingData data) throws FactAnalysisException, JsonProcessingException {
         logger.info("Incoming data: \n{}", data.getObject().toString());
         var responseData = ruleChainingService.doForwardChaining(data.getObject());
         var messageResponse = new MessageResponse();
