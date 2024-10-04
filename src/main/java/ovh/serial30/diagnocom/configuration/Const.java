@@ -57,6 +57,7 @@ public abstract class Const {
             String TEMP_36 = "36.0";
             String TEMP_37 = "37.0";
             String TEMP_37_5 = "37.5";
+            String TEMP_37_6 = "37.6";
         }
 
         interface RuleId {

@@ -72,7 +72,7 @@ public class RuleChainingServiceImpl implements RuleChainingService {
             case Const.BRB.Facts.LOC_INTERNA -> options = new InternalOptions();
             case Const.BRB.Facts.LOC_URINARIA -> options = new UrinaryOptions();
             case Const.BRB.Facts.LOC_CUTANEA -> options = new SkinOptions();
-            default -> options = new GeneralOptions();
+            default -> options = new LocOptions();
         }
         return options;
     }

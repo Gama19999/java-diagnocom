@@ -16,7 +16,7 @@ public class GeneralOptions {
     public GeneralOptions() {
         temperatura = new OptVariable(Const.BRB.Facts.TEMPERATURA, "Temperatura corporal", null);
         grados = new OptVariable(Const.BRB.VarName.grados, "°C", Const.BRB.Values.TEMP_37);
-        localizacion = new OptVariable(Const.BRB.Facts.LOCALIZACION, "Localización de la afeccion", null);
+        localizacion = new OptVariable(Const.BRB.Facts.LOCALIZACION, "Localización de la afección", null);
         enfermedad = new OptVariable(Const.BRB.Facts.ENFERMEDAD, "Enfermedad inferida", null);
     }
 

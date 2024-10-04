@@ -156,7 +156,7 @@ public abstract class DiagnoComVariableSet {
                 new Clause(temperatura, equal, Const.BRB.Facts.HIPOTERMIA));
         Rule normal = new Rule(brb, Const.BRB.RuleId.R2,
                 new Clause[]{new Clause(grados, greater, Const.BRB.Values.TEMP_35_9),
-                        new Clause(grados, less, Const.BRB.Values.TEMP_37_5),},
+                        new Clause(grados, less, Const.BRB.Values.TEMP_37_6)},
                 new Clause(temperatura, equal, Const.BRB.Facts.TEMP_NORMAL));
         Rule fiebre = new Rule(brb, Const.BRB.RuleId.R3,
                 new Clause[]{new Clause(grados, greater, Const.BRB.Values.TEMP_37_5)},
