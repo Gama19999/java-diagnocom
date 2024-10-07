@@ -32,7 +32,7 @@ public class AuthController {
         var messageResponse = new MessageResponse();
         messageResponse.setStatus(HttpStatus.CREATED.value());
         messageResponse.setData(userToken);
-        logger.info("REGISTRATION SUCCESSFUL OF USER ({}) - GENERATED TOKEN ({})", extractData(data).username(), userToken.token());
+        logger.info(Const.Logs.Auth.REGISTER, extractData(data).username(), userToken.token());
         return ResponseEntity.status(messageResponse.getStatus()).body(messageResponse);
     }
 
@@ -45,7 +45,7 @@ public class AuthController {
         var userToken = userService.loginUser(extractData(data));
         var messageResponse = new MessageResponse();
         messageResponse.setData(userToken);
-        logger.info("AUTH SUCCESSFUL FOR USER ({}) WITH TOKEN ({})", extractData(data).username(), userToken.token());
+        logger.info(Const.Logs.Auth.LOGIN, extractData(data).username(), userToken.token());
         return ResponseEntity.status(messageResponse.getStatus()).body(messageResponse);
     }
     

@@ -1,17 +1,12 @@
 package ovh.serial30.diagnocom.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import ovh.serial30.diagnocom.configuration.Const;
-import ovh.serial30.diagnocom.entities.ResultEntity;
 import ovh.serial30.diagnocom.exceptions.FactAnalysisException;
+import ovh.serial30.diagnocom.exceptions.ServerException;
 import ovh.serial30.diagnocom.pojos.dto.*;
-import ovh.serial30.diagnocom.repositories.ResultRepository;
 import ovh.serial30.diagnocom.rulebase.DiagnoComBRB;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +14,13 @@ import java.util.*;
 
 @Service
 public class RuleChainingServiceImpl implements RuleChainingService {
-    private static final Logger logger = LoggerFactory.getLogger(RuleChainingServiceImpl.class);
 
     @Autowired
-    private ResultRepository resultRepository;
-    @Autowired
-    private JWTService jwtService;
-    @Autowired
-    private HttpServletRequest request;
+    private ResultService resultService;
 
     @Override
-    public GeneralOptions doForwardChaining(Map<String, String> data) throws FactAnalysisException, JsonProcessingException {
+    public Object doForwardChaining(Map<String, String> data)
+            throws FactAnalysisException, JsonProcessingException, ServerException {
         var brb = new DiagnoComBRB();
         var temperatura = brb.insertChoices(data).getTemperatura();
         var grados = data.get(Const.BRB.VarName.grados);
@@ -37,7 +28,7 @@ public class RuleChainingServiceImpl implements RuleChainingService {
         var enfermedad = brb.insertChoices(data).getEnfermedad();
         var generalOptions = set(temperatura, grados, localizacion, enfermedad);
         if (data.get(Const.BRB.Values.CHAINING).equals(Const.BRB.Values.THIRD) && is3rdChainingValid(generalOptions))
-            saveResults(generalOptions, data);
+            return resultService.saveResult(generalOptions, data);
         return generalOptions;
     }
 
@@ -85,24 +76,7 @@ public class RuleChainingServiceImpl implements RuleChainingService {
      */
     private boolean is3rdChainingValid(GeneralOptions generalOptions) throws FactAnalysisException {
         if (generalOptions.enfermedad.getValue() == null)
-            throw new FactAnalysisException(HttpStatus.NOT_FOUND.value(), Const.Logs.FACT_NOT_INFERRED);
+            throw new FactAnalysisException(HttpStatus.NOT_FOUND.value(), Const.Logs.ChainLogic.FACT_NOT_INFERRED);
         return true;
-    }
-
-    /**
-     * Guarda el conocimiento inferido en la base de datos
-     * @param generalOptions Representacion que almacena los datos utilizados por la base de reglas
-     * @param data Datos provenientes del cliente
-     * @throws JsonProcessingException Si hay error al crear el objeto JSON
-     */
-    private void saveResults(GeneralOptions generalOptions, Map<String, String> data) throws JsonProcessingException {
-        generalOptions.matchUserOptions(data);
-        var userId = jwtService.getUserId(request.getHeader(Const.Headers.TOKEN));
-        var json = new ObjectMapper().writeValueAsString(generalOptions);
-        var entity = new ResultEntity();
-        entity.setUserId(userId);
-        entity.setContent(json);
-        entity = resultRepository.save(entity);
-        logger.info("\nSaving for user's ID: ({})\n{}", userId, entity);
     }
 }

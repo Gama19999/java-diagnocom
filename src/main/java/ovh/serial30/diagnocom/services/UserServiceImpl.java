@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,12 +26,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserToken registerUser(UserRequest userRequest) {
-        var userId = userRepository.save(extractData(userRequest)).getUserId().toString();
+        var userId = userRepository.save(getUserEntity(userRequest)).getUserId().toString();
         var token = jwtService.generateToken(userId);
         return new UserToken(token);
     }
 
-    private UserEntity extractData(UserRequest userRequest) { // TODO decrypt data
+    private UserEntity getUserEntity(UserRequest userRequest) {
         var entity = new UserEntity();
         entity.setUsername(userRequest.username());
         entity.setPassword(userRequest.password());
@@ -42,34 +41,45 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserToken loginUser(UserRequest userRequest) throws AuthDataException {
         var userEntity = userRepository.findByUsername(userRequest.username());
-        if (userEntity == null) throw new AuthDataException(HttpStatus.NOT_FOUND.value(), Const.Logs.USER_NOT_FOUND);
-        if (!userRequest.password().equals(userEntity.getPassword())) throw new AuthDataException(HttpStatus.UNAUTHORIZED.value(), Const.Logs.WRONG_PASSWORD);
+        verifyUserLoginData(userEntity, userRequest);
         userEntity.setLastLogin(new Timestamp(new Date().getTime()));
         userEntity = userRepository.save(userEntity);
         var token = jwtService.generateToken(userEntity.getUserId().toString());
         return new UserToken(token);
     }
 
-    @Override
-    public UserResponse getUser(UUID userId) throws ServerException {
-        var userEntity = userRepository.findById(userId);
-        if (userEntity.isEmpty()) throw new ServerException(HttpStatus.NOT_FOUND.value(), Const.Logs.USER_NOT_FOUND);
-        return exportData(userEntity.get());
+    private void verifyUserLoginData(UserEntity userEntity, UserRequest userRequest) throws AuthDataException {
+        if (userEntity == null)
+            throw new AuthDataException(HttpStatus.NOT_FOUND.value(), Const.Logs.User.USER_NOT_FOUND);
+        if (!userRequest.password().equals(userEntity.getPassword()))
+            throw new AuthDataException(HttpStatus.UNAUTHORIZED.value(), Const.Logs.User.WRONG_PASSWORD);
     }
 
-    private UserResponse exportData(UserEntity userEntity) {
+    @Override
+    public UserResponse getUser() throws ServerException {
+        var userEntity = userRepository.findById(jwtService.getUserId());
+        if (userEntity.isEmpty()) throw new ServerException(HttpStatus.NOT_FOUND.value(), Const.Logs.User.USER_NOT_FOUND);
+        return getUserResponse(userEntity.get());
+    }
+
+    private UserResponse getUserResponse(UserEntity userEntity) {
         return new UserResponse(userEntity.getUsername(), userEntity.getEmail(), userEntity.getLastLogin());
     }
 
     @Override
-    public UserResponse updateUser(UUID userId, UserUpdateRequest userUpdateRequest) throws AuthDataException {
-        var userEntity = userRepository.findById(userId).orElseThrow(() -> new AuthDataException(HttpStatus.NOT_FOUND.value(), Const.Logs.USER_NOT_FOUND));
-        if (!userEntity.getPassword().equals(userUpdateRequest.currentPassword()))
-            throw new AuthDataException(HttpStatus.UNAUTHORIZED.value(), Const.Logs.WRONG_PASSWORD);
+    public UserResponse updateUser(UserUpdateRequest userUpdateRequest) throws AuthDataException {
+        var userEntity = userRepository.findById(jwtService.getUserId())
+                .orElseThrow(() -> new AuthDataException(HttpStatus.NOT_FOUND.value(), Const.Logs.User.USER_NOT_FOUND));
+        verifyOldPassword(userEntity, userUpdateRequest);
         userEntity.setEmail(userUpdateRequest.email());
         userEntity.setLastLogin(new Timestamp(new Date().getTime()));
         if (userUpdateRequest.newPassword() != null) userEntity.setPassword(userUpdateRequest.newPassword());
         userEntity = userRepository.save(userEntity);
-        return exportData(userEntity);
+        return getUserResponse(userEntity);
+    }
+
+    private void verifyOldPassword(UserEntity userEntity, UserUpdateRequest userUpdateRequest) throws AuthDataException {
+        if (!userEntity.getPassword().equals(userUpdateRequest.currentPassword()))
+            throw new AuthDataException(HttpStatus.UNAUTHORIZED.value(), Const.Logs.User.WRONG_PASSWORD);
     }
 }

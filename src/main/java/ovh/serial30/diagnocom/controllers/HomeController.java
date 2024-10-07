@@ -32,7 +32,7 @@ public class HomeController {
     }
 
     private void log(HttpServletRequest request, MessageResponse response) {
-        logger.info("Request from: {}://{}:{}", request.getScheme(), request.getRemoteHost(), request.getRemotePort());
+        logger.info(Const.Logs.HOME, request.getScheme(), request.getRemoteHost(), request.getRemotePort());
         logger.info(response.getData().toString());
     }
 }

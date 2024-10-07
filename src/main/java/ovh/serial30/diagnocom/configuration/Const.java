@@ -4,16 +4,35 @@ package ovh.serial30.diagnocom.configuration;
  * Clase que concentra las cadenas de texto como constantes
  */
 public abstract class Const {
-
     public interface Logs {
-        String SECURITY_LOADED = "CONFIGURACIÓN DE SEGURIDAD TERMINADA";
-        String FACT_NOT_INFERRED = "No se puede inferir un resultado acertado";
-        String ACCESS_DENIED = "Acceso al resurso denegado!";
-        String INVALID_TOKEN = "Token de usuario inválido!";
-        String USER_NOT_FOUND = "Usuario no encontrado!";
-        String WRONG_PASSWORD = "Contraseña actual incorrecta!";
+        String HOME = "REQUEST FROM: {}://{}:{}";
+        interface Config {
+            String SECURITY_LOADED = "CONFIGURACION DE SEGURIDAD TERMINADA";
+            String ACCESS_DENIED = "ACCESO AL RESURSO DENEGADO!";
+            String INVALID_TOKEN = "TOKEN DE USUARIO INVALIDO!";
+        }
+        interface Auth {
+            String REGISTER = "REGISTRATION SUCCESSFUL OF USER ({}) - GENERATED TOKEN ({})";
+            String LOGIN = "AUTH SUCCESSFUL FOR USER ({}) - WITH TOKEN ({})";
+        }
+        interface User {
+            String USER_INFO = "GOT INFO FOR USER ({})";
+            String USER_UPDATE_INFO = "UPDATE INFO FOR USER ({})";
+            String USER_NOT_FOUND = "Usuario no encontrado!";
+            String WRONG_PASSWORD = "Contraseña actual incorrecta!";
+        }
+        interface Result {
+            String SINGLE_RESULT = "GOT REQUESTED RESULT WITH ID ({})";
+            String ALL_RESULTS = "GOT ALL RESULTS FOR USER ({})";
+            String RESULT_NOT_FOUND = " - RESULT NOT FOUND";
+            String EMPTY_RESULTS = "NO RESULTS AVAILABLE FOR USER ID - ";
+            String SAVED_RESULT = "SAVED RESULT WITH ID ({}) FROM USER ID ({})";
+        }
+        interface ChainLogic {
+            String INCOMING_DATA = "CHAINING INCOMING DATA: \n{}";
+            String FACT_NOT_INFERRED = "No se puede inferir un resultado acertado!";
+        }
     }
-
     public interface Routes {
         String ALL = "/**";
         String HOME = "/home";
@@ -22,14 +41,14 @@ public abstract class Const {
         String REGISTER = "/register";
         String LOGIN = "/login";
         String USER = "/user";
+        String RESULTS = "/results";
+        String SINGLE_RESULT = "/{resultId}";
         String BRB = "/brb";
         String FORWARD = "/forward";
     }
-
     public interface Headers {
         String TOKEN = "Authorization";
     }
-
     public interface Entities {
         String TABLE_USERS = "users";
         String JPQL_USERS = "USERS";
@@ -46,7 +65,6 @@ public abstract class Const {
         String RESULT_ID = "result_id";
         String CONTENT = "content";
     }
-
     public interface BRB {
         interface Values {
             String SI = "si";
@@ -59,7 +77,6 @@ public abstract class Const {
             String TEMP_37_5 = "37.5";
             String TEMP_37_6 = "37.6";
         }
-
         interface RuleId {
             String R1 = "R1";
             String R2 = "R2";
@@ -92,7 +109,6 @@ public abstract class Const {
             String R29 = "R29";
             String R30 = "R30";
         }
-
         interface VarName {
             String grados = "grados";
             String locCabeza = "locCabeza";
@@ -130,7 +146,6 @@ public abstract class Const {
             String inflamacionZona = "inflamacionZona";
             String altaSensibilidadZona = "altaSensibilidadZona";
         }
-
         interface Facts {
             String TEMPERATURA = "temperatura";
             String LOCALIZACION = "localizacion";

@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                     .anyRequest().authenticated())
            .sessionManagement((sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        logger.info(Const.Logs.SECURITY_LOADED);
+        logger.info(Const.Logs.Config.SECURITY_LOADED);
         return http.build();
     }
 

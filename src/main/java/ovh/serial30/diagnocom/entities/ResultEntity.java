@@ -16,7 +16,7 @@ import java.util.UUID;
 public class ResultEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = Const.Entities.RESULT_ID, insertable = false, updatable = false)
+    @Column(name = Const.Entities.RESULT_ID, insertable = false, updatable = false, nullable = false)
     private UUID resultId;
 
     @Setter
@@ -27,6 +27,7 @@ public class ResultEntity {
     @Column(name = Const.Entities.CONTENT, nullable = false)
     private String content;
 
-    @Column(name = Const.Entities.CREATED_AT, insertable = false, updatable = false)
+    @Setter
+    @Column(name = Const.Entities.CREATED_AT, updatable = false, nullable = false)
     private Timestamp createdAt;
 }

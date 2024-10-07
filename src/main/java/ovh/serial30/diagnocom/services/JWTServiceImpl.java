@@ -1,5 +1,7 @@
 package ovh.serial30.diagnocom.services;
 
+import jakarta.servlet.http.HttpServletRequest;
+import ovh.serial30.diagnocom.configuration.Const;
 import ovh.serial30.diagnocom.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -19,6 +21,8 @@ public class JWTServiceImpl implements JWTService {
     private String appName;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private HttpServletRequest request;
 
     public JWTServiceImpl() {
         secretKey = Jwts.SIG.HS256.key().build();
@@ -31,6 +35,11 @@ public class JWTServiceImpl implements JWTService {
                 .issuer(appName)
                 .signWith(secretKey)
                 .compact();
+    }
+
+    @Override
+    public UUID getUserId() {
+        return UUID.fromString(getClaim(request.getHeader(Const.Headers.TOKEN), Claims::getSubject).toString());
     }
 
     @Override

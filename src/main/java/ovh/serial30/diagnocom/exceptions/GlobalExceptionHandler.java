@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class  GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(FactAnalysisException.class)
@@ -41,10 +41,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 
-    @ExceptionHandler({ServerException.class, Exception.class})
+    @ExceptionHandler(Exception.class)
     public ResponseEntity<?> serverException(Exception e) {
         var response = new MessageResponse();
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.setData(e.getMessage());
+        err(response);
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(ServerException.class)
+    public ResponseEntity<?> serverException(ServerException e) {
+        var response = new MessageResponse();
+        response.setStatus(e.statusCode);
         response.setData(e.getMessage());
         err(response);
         return ResponseEntity.status(response.getStatus()).body(response);

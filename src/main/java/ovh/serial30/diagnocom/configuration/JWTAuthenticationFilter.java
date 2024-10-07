@@ -50,13 +50,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
             filterChain.doFilter(request, response);
-        } catch (IllegalArgumentException iae) { // protected endpoint request without token
+        } catch (IllegalArgumentException iae) { // Request to protected endpoint but without token
             logger.error(iae.getMessage());
-            handlerExceptionResolver.resolveException(request, response, null, new TokenException(HttpStatus.FORBIDDEN.value(), Const.Logs.ACCESS_DENIED));
-        } catch (JwtException jwte) {
+            handlerExceptionResolver.resolveException(
+                    request, response, null, new TokenException(HttpStatus.FORBIDDEN.value(), Const.Logs.Config.ACCESS_DENIED));
+        } catch (JwtException jwte) { // Invalid token
             logger.error(jwte.getMessage());
-            handlerExceptionResolver.resolveException(request, response, null, new TokenException(HttpStatus.UNAUTHORIZED.value(), Const.Logs.INVALID_TOKEN));
-        } catch (Exception e) {
+            handlerExceptionResolver.resolveException(
+                    request, response, null, new TokenException(HttpStatus.UNAUTHORIZED.value(), Const.Logs.Config.INVALID_TOKEN));
+        } catch (Exception e) { // Other
             logger.error(e.getMessage());
             handlerExceptionResolver.resolveException(request, response, null, e);
         }
